@@ -20,10 +20,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('newui');
 });
 Route::get('/mapsapi', function () {
     return view('maps');
+});
+Route::get('/api', function () {
+    return view('api');
 });
 
 Route::get('/pdf', function () {
