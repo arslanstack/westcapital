@@ -229,24 +229,48 @@
               <thead>
                 <tr>
                   <th>A. Origination Charges</th>
-                  <th>$ 0.00</th>
+                  <th>$ 1050.00</th>
                 </tr>
               </thead>
               <tbody>
-
-
+                <tr>
+                  <td>Underwritting Fee:</td>
+                  <td>$ 1050.00</td>
+                </tr>
+                <tr>
+                  <td>Discount Points:</td>
+                  <td>$ 0.00</td>
+                </tr>
               </tbody>
             </table>
             <table>
               <thead>
                 <tr>
                   <th>B. Services You Cannot Shop For</th>
-                  <th>$ 0.00</th>
+                  <th>$ 1579.00</th>
                 </tr>
               </thead>
               <tbody>
-
-
+                <tr>
+                  <td>Appraisal Fee:</td>
+                  <td>$ 650.00</td>
+                </tr>
+                <tr>
+                  <td>3rd Party Processing Fee:</td>
+                  <td>$ 649.00</td>
+                </tr>
+                <tr>
+                  <td>MERS Fee:</td>
+                  <td>$ 30.00</td>
+                </tr>
+                <tr>
+                  <td>Life of Loan Flood Fee:</td>
+                  <td>$ 35.00</td>
+                </tr>
+                <tr>
+                  <td>Credit Report Fee:</td>
+                  <td>$ 85.00</td>
+                </tr>
               </tbody>
             </table>
             <table>

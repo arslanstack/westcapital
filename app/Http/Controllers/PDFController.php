@@ -37,13 +37,13 @@ class PDFController extends Controller
         }
         $data['other_fees'] = $fee_response['data']['other_fees'];
         $data['total_other'] = 0;
-        foreach ($fee_response['data']['other_fees'] as $fee_name => $fee_amount){
+        foreach ($fee_response['data']['other_fees'] as $fee_name => $fee_amount) {
             $data['total_other'] += $fee_amount;
         }
         $data['transfer_fee_breakdown'] = $fee_response['data']['transfer_fee_breakdown'];
-        $data['transfer_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['transfer_tax'] ;
+        $data['transfer_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['transfer_tax'];
         $data['recording_fee_breakdown'] = $fee_response['data']['recording_fee_breakdown'];
-        $data['recording_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['recording_fee'] ;
+        $data['recording_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['recording_fee'];
         // dd($data['transfer_fee_breakdown_total'], $data['recording_fee_breakdown_total']);
         // dd($data['services_you_can_shop_for'], $data['total_loan_cost'], $data['taxes_and_other_govt_fees'], $data['other_fees'], $data['transfer_fee_breakdown'], $data['recording_fee_breakdown']);
         // dd($fee_response);
@@ -156,24 +156,23 @@ class PDFController extends Controller
                 'message' => 'Image not found'
             ], 404);
         }
-        $fee_response = $this->categorizeFees($request->fee_response_json);
-        unset($data['fee_response_json']);
-        // dd($data);
-        $data['borrowerFees'] = $fee_response['borrowerFees'];
-        $data['totalBorrowerFee'] = 0;
-        foreach ($fee_response['borrowerFees'] as $fee) {
-            $data['totalBorrowerFee'] += $fee['Amount'];
+        $fee_response = json_decode($request->fee_response_json, true);
+        $data['services_you_can_shop_for'] = $fee_response['data']['services_you_can_shop_for'];
+        $data['total_loan_cost'] = $fee_response['data']['total_loan_cost'];
+        $data['taxes_and_other_govt_fees'] = $fee_response['data']['taxes_and_other_govt_fees'];
+        $data['total_taxes_and_fee'] = 0;
+        foreach ($fee_response['data']['taxes_and_other_govt_fees'] as $fee_name => $fee_amount) {
+            $data['total_taxes_and_fee'] += $fee_amount;
         }
-        $data['taxAndGovtFees'] = $fee_response['taxAndGovtFees'];
-        $data['totalTaxAndGovtFee'] = 0;
-        foreach ($fee_response['taxAndGovtFees'] as $fee) {
-            $data['totalTaxAndGovtFee'] += $fee['amount'] ?? 0;
+        $data['other_fees'] = $fee_response['data']['other_fees'];
+        $data['total_other'] = 0;
+        foreach ($fee_response['data']['other_fees'] as $fee_name => $fee_amount) {
+            $data['total_other'] += $fee_amount;
         }
-        $data['otherApplicableFees'] = $fee_response['otherApplicableFees'];
-        $data['totalOtherApplicableFee'] = 0;
-        foreach ($fee_response['otherApplicableFees'] as $fee) {
-            $data['totalOtherApplicableFee'] += $fee['Amount'];
-        }
+        $data['transfer_fee_breakdown'] = $fee_response['data']['transfer_fee_breakdown'];
+        $data['transfer_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['transfer_tax'];
+        $data['recording_fee_breakdown'] = $fee_response['data']['recording_fee_breakdown'];
+        $data['recording_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['recording_fee'];
         $data['date'] = date('Y-m-d');
         // dd($request->sendingemail);
         $pdf = PDF::loadView('pdf.template', $data);

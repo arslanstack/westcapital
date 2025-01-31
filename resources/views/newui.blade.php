@@ -19,67 +19,8 @@
             background-color: #80808036 !important;
             cursor: not-allowed;
         }
-
-        .loan-costs-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            font-family: Arial, sans-serif;
-        }
-
-        .loan-costs-section,
-        .other-costs-section {
-            width: 48%;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            background-color: black;
-            color: white;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-
-        .cost-item {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-
-        .item-label {
-            font-weight: bold;
-        }
-
-        .item-value {
-            font-weight: bold;
-            color: #000;
-        }
-
-        .total-cost {
-            font-size: 16px;
-            border-top: 1px solid #ccc;
-            padding-top: 10px;
-        }
-
-        .service-list {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .service-list li {
-            list-style-type: disc;
-        }
-
-        .bg-dark-gray {
-            background-color: #757575;
-        }
-
-        .one-table {
-            border: 1px solid #ccc;
-            padding: 15px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        .one-table ul li{
+            text-align: left;
         }
     </style>
 </head>
@@ -102,7 +43,7 @@
     </div>
     <!-- Response Modal -->
     <div class="modal2" id="modal2" style="display:none;">
-        <div class="modal-content resModalContent">
+        <div class="resModalContent-modal-content">
             <span class="close" id="closeResModal">&times;</span>
             <div class="resDiv">
                 <div class="loan-costs-container">
@@ -113,12 +54,24 @@
                                 <span class="item-label">A. Origination Charges</span>
                                 <span class="item-value">$0.00</span>
                             </div>
+                            <ul class="origination-charges-list">
+                                <li style="text-align: left;">Underwritting Fee: <span style="float: right;">$1050.00</span></li>
+                                <li style="text-align: left;">Discount Points: <span style="float: right;">$0.00</span></li>
+                            </ul>
                         </div>
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">B. Services You Cannot Shop For</span>
-                                <span class="item-value">$0.00</span>
+                                <span class="item-value">$ 1579.00</span>
                             </div>
+                            <ul class="service-cannot-shop-list">
+                                <li style="text-align: left;">Appraisal Fee: <span style="float: right;">$650.00</span></li>
+                                <li style="text-align: left;">3rd Party Processing Fee: <span style="float: right;">$649.00</span></li>
+                                <li style="text-align: left;">MERS Fee: <span style="float: right;">$30.00</span></li>
+                                <li style="text-align: left;">Life of Loan Flood Fee: <span style="float: right;">$130.00</span></li>
+                                <li style="text-align: left;">Flood Certification Fee: <span style="float: right;">$35.00</span></li>
+                                <li style="text-align: left;">Credit Report Fee: <span style="float: right;">$85.00</span></li>
+                            </ul>
                         </div>
                         <div class="one-table">
                             <div class="cost-item">
@@ -147,24 +100,25 @@
                                 <li>Transfer Taxes: <span style="float: right;" class="recording"></span></li>
                             </ul>
                         </div>
-                        <div class="one-table bg-dark-gray" style="background-color: #b88484 !important; font-size: 11px;">
-                            <div class="cost-item">
-                                <span class="item-label">E-1. Taxes Break Down</span>
-                                <span class="item-value"></span>
-                            </div>
-                            <ul class="service-list tax-breakdown">
-
-                            </ul>
-                        </div>
                         <div class="one-table bg-dark-gray" style="background-color: #c99e9e !important; font-size: 11px;">
                             <div class="cost-item">
-                                <span class="item-label">E-2. Recording Fee Break Down</span>
+                                <span class="item-label">E-1. Recording Fee Break Down</span>
                                 <span class="item-value"></span>
                             </div>
                             <ul class="service-list recording-breakdown">
 
                             </ul>
                         </div>
+                        <div class="one-table bg-dark-gray" style="background-color: #b88484 !important; font-size: 11px;">
+                            <div class="cost-item">
+                                <span class="item-label">E-2. Taxes Break Down</span>
+                                <span class="item-value"></span>
+                            </div>
+                            <ul class="service-list tax-breakdown">
+
+                            </ul>
+                        </div>
+
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">F. Pre-Paids</span>
