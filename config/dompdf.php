@@ -46,7 +46,13 @@ return [
          * Symbol, ZapfDingbats.
          */
         'font_dir' => storage_path('fonts'), // advised by dompdf (https://github.com/dompdf/dompdf/pull/782)
-
+        'font_family' => [
+            'roboto' => [
+                'R'  => 'Roboto-VariableFont_wdth,wght.ttf',    // Regular
+                'B'  => 'Roboto-VariableFont_wdth,wght.ttf',       // Bold
+                'I'  => 'Roboto-Italic-VariableFont_wdth,wght.ttf',     // Italic
+            ],
+        ],
         /**
          * The location of the DOMPDF font cache directory
          *

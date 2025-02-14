@@ -9,9 +9,7 @@
     <title>Loan Calculator</title>
     <link rel="stylesheet" href="{{asset('css/styles2.css')}}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
-        integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .disabled {
             cursor: not-allowed;
@@ -36,8 +34,8 @@
         </div>
         <div class="modal-content">
             <h3>Enter Password To View Calculator</h3>
-            <input type="password" id="passwordInput" value="12345" placeholder="Enter password" />
-            <button id="submitPassword">
+            <input type="password" id="passwordInput" style="width:200px" value="12345" placeholder="Enter password" />
+            <button id="submitPassword" style="height:37px">
                 <span>Submit</span>
                 <div class="layer"></div>
             </button>
@@ -58,10 +56,8 @@
                                 <span class="item-value"></span>
                             </div>
                             <ul class="origination-charges-list">
-                                <li style="text-align: left;">Underwritting Fee: <span
-                                        style="float: right;">$1,050.00</span></li>
-                                <li style="text-align: left;display: none;" class="disLi">Discount Points: <span
-                                        style="float: right;" class="discont_p">$0.00</span></li>
+                                <li style="text-align: left;">Underwritting Fee: <span style="float: right;">$1,050.00</span></li>
+                                <li style="text-align: left;display: none;" class="disLi">Discount Points: <span style="float: right;" class="discont_p">$0.00</span></li>
                             </ul>
                             <div class="cost-item">
                                 <span class="item-label">Total Origination Charges</span>
@@ -74,17 +70,12 @@
                                 <span class="item-value"></span>
                             </div>
                             <ul class="service-cannot-shop-list">
-                                <li style="text-align: left;">Appraisal Fee: <span style="float: right;">$650.00</span>
-                                </li>
-                                <li style="text-align: left;">3rd Party Processing Fee: <span
-                                        style="float: right;">$649.00</span></li>
+                                <li style="text-align: left;">Appraisal Fee: <span style="float: right;">$650.00</span></li>
+                                <li style="text-align: left;">3rd Party Processing Fee: <span style="float: right;">$649.00</span></li>
                                 <li style="text-align: left;">MERS Fee: <span style="float: right;">$30.00</span></li>
-                                <li style="text-align: left;">Life of Loan Flood Fee: <span
-                                        style="float: right;">$130.00</span></li>
-                                <li style="text-align: left;">Flood Certification Fee: <span
-                                        style="float: right;">$35.00</span></li>
-                                <li style="text-align: left;">Credit Report Fee: <span
-                                        style="float: right;">$85.00</span></li>
+                                <li style="text-align: left;">Life of Loan Flood Fee: <span style="float: right;">$130.00</span></li>
+                                <li style="text-align: left;">Flood Certification Fee: <span style="float: right;">$35.00</span></li>
+                                <li style="text-align: left;">Credit Report Fee: <span style="float: right;">$85.00</span></li>
                             </ul>
                             <div class="cost-item">
                                 <span class="item-label">Total Services You Cannot Shop For</span>
@@ -118,8 +109,7 @@
                                 <span class="item-value"></span>
                             </div>
                             <ul class="service-list">
-                                <li>Recording Fees and Other Taxes: <span style="float: right;"
-                                        class="recording"></span></li>
+                                <li>Recording Fees and Other Taxes: <span style="float: right;" class="recording"></span></li>
                                 <li>Transfer Taxes: <span style="float: right;" class="tax"></span></li>
                             </ul>
                             <div class="cost-item">
@@ -162,14 +152,14 @@
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">G. Initial Escrow Payment at Closing </span>
-                                <span class="item-value total-escrow">$0</span>
+                                <span class="item-value"></span>
                             </div>
                             <ul class="service-list escrow">
 
                             </ul>
                             <div class="cost-item">
                                 <span class="item-label">Total Initial Escrow Payment at Closing </span>
-                                <span class="item-value"></span>
+                                <span class="item-value total-escrow">$0</span>
                             </div>
                         </div>
                         <div class="one-table">
@@ -189,17 +179,8 @@
                                 <span class="item-label">I. Total Estimated Monthly Housing Payment</span>
                                 <span class="item-value"></span>
                             </div>
-                            <ul class="service-list est-monthly">
-                                <li style="text-align: left;">First Mortgage Payment: <span style="float: right;"
-                                        class="f_mortgage">$0.00</span></li>
-                                <li style="text-align: left;">Hazard Insurance: <span style="float: right;"
-                                        class="monthly_insurance">$0.00</span></li>
-                                <li style="text-align: left;">Property Tax: <span style="float: right;"
-                                        class="monthly_tax">$0.00</span></li>
-                                <li style="text-align: left;">Mortgage Insurance: <span style="float: right;"
-                                        class="monthly_mip">$0.00</span></li>
-                                <li style="text-align: left;">Monthly HOA Fee: <span style="float: right;"
-                                        class="monthly_hoa">$0.00</span></li>
+                            <ul class="service-list est-monthly monthly_estimates_ul">
+
                             </ul>
                             <div class="cost-item total-cost">
                                 <span class="item-label">Total Estimated Monthly Housing Payment</span>
@@ -218,7 +199,7 @@
         <div class="modal-content">
             <span class="close" id="close_modal">&times;</span>
             <!--<h3>Enter the email Id you want to sent disastemate</h3>-->
-            <input type="text" id="send_email" placeholder="Enter the email Id you want to sent disastemate" />
+            <input type="text" id="send_email" placeholder="Enter the email address" />
             <div class="button-container pdf">
                 <button class="button btn-pdf disabled" disabled>
                     <span>Download PDF Now</span>
@@ -301,8 +282,7 @@
                     <label for="refinancePrice">Estimated Property Value ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="text" class="number-input" id="refinancePrice" value="100000"
-                            placeholder="Enter refinance price" />
+                        <input type="number" class="number-input" id="refinancePrice" value="100000" placeholder="Enter refinance price" />
                     </div>
                 </div>
 
@@ -311,8 +291,7 @@
                     <label for="purchasePrice">Purchase Price ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="text" class="number-input" id="purchasePrice" value="100000"
-                            placeholder="Enter purchase price" />
+                        <input type="number" class="number-input" id="purchasePrice" value="100000" placeholder="Enter purchase price" />
                     </div>
                 </div>
 
@@ -390,8 +369,7 @@
                     <label for="interestRate">Interest Rate (%)</label>
                     <div class="input-wrapper">
                         <span>%</span>
-                        <input type="number" id="interestRate" value="7.09" placeholder="Enter annual interest rate"
-                            value="5" />
+                        <input type="number" id="interestRate" value="7.09" placeholder="Enter annual interest rate" value="5" />
                     </div>
                 </div>
                 <div class="flex_input">
@@ -414,24 +392,21 @@
                     <label for="propertyTaxes">Annual Property Taxes ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="propertyTaxes"
-                            placeholder="Enter annual property taxes" />
+                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="propertyTaxes" placeholder="Enter annual property taxes" />
                     </div>
                 </div>
                 <div class="flex_input">
                     <label for="homeInsurance">Annual Home Insurance ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="homeInsurance"
-                            placeholder="Enter annual home insurance" />
+                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="homeInsurance" placeholder="Enter annual home insurance" />
                     </div>
                 </div>
                 <div class="flex_input">
                     <label for="hoaFees">Monthly HOA Fees ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" id="hoaFees" onkeyup="calculateMonthlyPayment1()" value="0"
-                            placeholder="Enter monthly HOA fees" />
+                        <input type="number" id="hoaFees" onkeyup="calculateMonthlyPayment1()" value="0" placeholder="Enter monthly HOA fees" />
                     </div>
                 </div>
                 <div class="flex_input">
@@ -470,15 +445,13 @@
                             <div class="right_input_flex">
                                 <label for="city">City</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="city" placeholder="e.g. Hialeah"
-                                        style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="city" placeholder="e.g. Hialeah" style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                             <div class="right_input_flex">
                                 <label for="state">State</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="state" placeholder="e.g. Florida"
-                                        style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="state" placeholder="e.g. Florida" style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                         </div>
@@ -486,15 +459,13 @@
                             <div class="right_input_flex">
                                 <label for="zip">Zip</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="zip" placeholder="e.g. 33015"
-                                        style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="zip" placeholder="e.g. 33015" style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                             <div class="right_input_flex">
                                 <label for="county">County</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="county" placeholder="e.g. Miami-Dade"
-                                        style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="county" placeholder="e.g. Miami-Dade" style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                         </div>
@@ -694,13 +665,10 @@
         }
     </script>
     <script src="{{asset('js/script2.js')}}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        document.querySelector('.get_fees button').addEventListener('click', function (e) {
+        document.querySelector('.get_fees button').addEventListener('click', function(e) {
             // validate first. Following fields are required state, county, and purchase price/Estimated Property Value based on loanType
             if ($('#state').val() == '') {
                 toastr.error('Please select a valid address', '', {
@@ -733,7 +701,7 @@
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     data: formData
                 },
-                success: function (response) {
+                success: function(response) {
                     letSend = true;
                     document.querySelector('.get_fees button').classList.remove('disabled');
                     document.querySelector('.get_fees button').innerHTML = 'Get Fees';
@@ -750,7 +718,7 @@
                     document.querySelector('.btn-pdf').classList.remove('disabled');
                     document.querySelector('.btn-pdf').removeAttribute('disabled');
                 },
-                error: function (error) {
+                error: function(error) {
                     letSend = false;
                     document.querySelector('.get_fees button').classList.remove('disabled');
                     document.querySelector('.get_fees button').innerHTML = 'Get Fees';
@@ -770,7 +738,7 @@
             resmodal.style.display = 'none';
             var serviceCanShopList = document.querySelector('.service-can-shop-list');
             serviceCanShopList.innerHTML = '';
-            response.data.services_you_can_shop_for.forEach(function (fee) {
+            response.data.services_you_can_shop_for.forEach(function(fee) {
                 var li = document.createElement('li');
                 li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + convertToMoney(fee.Amount) + '</span>';
                 serviceCanShopList.appendChild(li);
@@ -778,12 +746,12 @@
 
             var totalServicesShop = document.querySelectorAll('.total-services-shop');
             totalServicesShop.innerHTML = '';
-            totalServicesShop.forEach(function (total) {
+            totalServicesShop.forEach(function(total) {
                 total.innerHTML = '$' + convertToMoney(response.data.total_loan_cost);
                 // the variable total_loan_cost only givesfor services you can shop for dont get confused
             });
             $total_loan_cost = document.querySelector('.total-loan-cost');
-            $total_loan_cost_value = response.data.total_loan_cost + 1579 + 1050 + parseFloat($('#discount_points').val());
+            $total_loan_cost_value = response.data.total_loan_cost + 1579 + 1050 + (parseFloat($('#discount_points').val()) || 0);
             $total_loan_cost.innerHTML = '$' + convertToMoney($total_loan_cost_value);
             // in discont_p show value of input discount_points
             var discont_p = document.querySelector('.discont_p');
@@ -797,9 +765,15 @@
             // in total-origination show 1050.00 + discount_points value
             var totalOrigination = document.querySelectorAll('.total-origination');
             totalOrigination.innerHTML = '';
-            totalOrigination.forEach(function (total) {
-                total.innerHTML = '$' + convertToMoney((1050 + parseFloat($('#discount_points').val())));
-            });
+            if ($('#discount_points').val() != '' && $('#discount_points').val() != 0 && $('#discount_points').val() != null) {
+                totalOrigination.forEach(function(total) {
+                    total.innerHTML = '$' + convertToMoney((1050 + parseFloat($('#discount_points').val())));
+                });
+            } else {
+                totalOrigination.forEach(function(total) {
+                    total.innerHTML = '$' + convertToMoney(1050);
+                });
+            }
             // if there is a Deed Fee in recording_fee then console log it
 
             // taxes_and_other_govt_fees contains two things
@@ -807,7 +781,7 @@
             // in class span tax show transfer_tax and recording show recording_fee
             var totalTaxes = document.querySelectorAll('.total-taxes');
             totalTaxes.innerHTML = '';
-            totalTaxes.forEach(function (total) {
+            totalTaxes.forEach(function(total) {
                 total.innerHTML = '$' + convertToMoney((response.data.taxes_and_other_govt_fees.transfer_tax + response.data.taxes_and_other_govt_fees.recording_fee));
             });
 
@@ -845,7 +819,7 @@
             // show in total-prepaid the total of mip, homeInsurance, propertyTaxes with formula applied
             var totalPrepaid = document.querySelectorAll('.total-prepaid');
             totalPrepaid.innerHTML = '';
-            totalPrepaid.forEach(function (total) {
+            totalPrepaid.forEach(function(total) {
                 total.innerHTML = '$' + convertToMoney((((parseFloat(homeInsurance.value) / 12) * 5) + ((parseFloat(propertyTaxes.value) / 12) * 5)).toFixed(2));
             });
 
@@ -866,29 +840,54 @@
             // show in total-escrow the total of mip, homeInsurance, propertyTaxes with formula applied
             var totalEscrow = document.querySelectorAll('.total-escrow');
             totalEscrow.innerHTML = '';
-            totalEscrow.forEach(function (total) {
+            totalEscrow.forEach(function(total) {
                 total.innerHTML = '$' + convertToMoney((((parseFloat(homeInsurance.value) / 12) * 2) + ((parseFloat(propertyTaxes.value) / 12) * 2)).toFixed(2));
             });
             // Table I
-            var mip = document.querySelector('#mip');
-            var monthly_mip = document.querySelector('.monthly_mip');
-            monthly_mip.innerHTML = '$' + convertToMoney((parseFloat(mip.value) || 0).toFixed(2));
+            var monthly_estimates_ul = document.querySelector('.monthly_estimates_ul');
+            monthly_estimates_ul.innerHTML = '';
+
+            var first_mortgage_value = calFirstMortgage();
+            if (first_mortgage_value != 0) {
+                var li = document.createElement('li');
+                li.innerHTML = 'First Mortgage Payment: <span style="float: right;">$' + convertToMoney(first_mortgage_value) + '</span>';
+                monthly_estimates_ul.appendChild(li);
+            }
+
+            var month_insurance_value = (parseFloat(homeInsurance.value) || 0) / 12;
+            if (month_insurance_value != 0) {
+                var li = document.createElement('li');
+                li.innerHTML = 'Hazard Insurance: <span style="float: right;">$' + convertToMoney(month_insurance_value) + '</span>';
+                monthly_estimates_ul.appendChild(li);
+            }
+
+            var month_tax_value = (parseFloat(propertyTaxes.value) || 0) / 12;
+            if (month_tax_value != 0) {
+                var li = document.createElement('li');
+                li.innerHTML = 'Property Taxes: <span style="float: right;">$' + convertToMoney(month_tax_value) + '</span>';
+                monthly_estimates_ul.appendChild(li);
+            }
+
+
             var hoa = document.querySelector('#hoaFees');
-            var monthly_hoa = document.querySelector('.monthly_hoa');
-            monthly_hoa.innerHTML = '$' + convertToMoney((parseFloat(hoa.value) || 0).toFixed(2));
-            var monthly_tax = document.querySelector('.monthly_tax');
-            monthly_tax.innerHTML = '';
-            monthly_tax.innerHTML = '$' + convertToMoney((parseFloat(propertyTaxes.value) / 12).toFixed(2));
-            var monthly_insurance = document.querySelector('.monthly_insurance');
-            monthly_insurance.innerHTML = '';
-            monthly_insurance.innerHTML = '$' + convertToMoney((parseFloat(homeInsurance.value) / 12).toFixed(2));
-            var f_mortgage = document.querySelector('.f_mortgage');
-            f_mortgage.innerHTML = '';
-            f_mortgage.innerHTML = '$' + convertToMoney(calFirstMortgage());
+            var hoavalue = parseFloat(hoa.value) || 0;
+            if (hoavalue != 0) {
+                var li = document.createElement('li');
+                li.innerHTML = 'Monthly HOA Fees: <span style="float: right;">$' + convertToMoney(hoavalue) + '</span>';
+                monthly_estimates_ul.appendChild(li);
+            }
+
+            var mip = document.querySelector('#mip');
+            var mipvalue = parseFloat(mip.value) || 0;
+            if (mipvalue != 0) {
+                var li = document.createElement('li');
+                li.innerHTML = 'Mortgage Insurance: <span style="float: right;">$' + convertToMoney(mipvalue) + '</span>';
+                monthly_estimates_ul.appendChild(li);
+            }
             var totalEstMonthly = document.querySelectorAll('.total-est-monthly');
             totalEstMonthly.innerHTML = '';
-            totalEstMonthly.forEach(function (total) {
-                total.innerHTML = '$' + convertToMoney((parseFloat(mip.value) + parseFloat(hoa.value) + (parseFloat(homeInsurance.value) / 12) + (parseFloat(propertyTaxes.value) / 12) + calFirstMortgage()).toFixed(2));
+            totalEstMonthly.forEach(function(total) {
+                total.innerHTML = '$' + convertToMoney((mipvalue + hoavalue + month_tax_value + month_insurance_value + first_mortgage_value).toFixed(2));
             });
 
 
@@ -904,7 +903,7 @@
 
             var totalOthers = document.querySelectorAll('.total-others');
             totalOthers.innerHTML = '';
-            totalOthers.forEach(function (total) {
+            totalOthers.forEach(function(total) {
                 var totalAmount = 0;
                 for (var key in response.data.other_fees) {
                     totalAmount += response.data.other_fees[key];
@@ -959,7 +958,7 @@
 
             return formData;
         }
-        $('.btn-pdf').click(function () {
+        $('.btn-pdf').click(function() {
             console.log("PDF clicked");
             var formdata = buildRequest();
             if (!formdata) {
@@ -977,7 +976,7 @@
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     // Create a download link
                     var link = document.createElement('a');
                     link.href = response.pdf_url; // URL of the generated PDF
@@ -985,21 +984,21 @@
                     link.click();
 
                     // Wait 5 seconds to ensure download before deletion
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $.ajax({
                             url: response.delete_url, // Delete URL provided by the backend
                             type: 'POST',
                             data: {
                                 _token: $('meta[name="csrf-token"]').attr('content'),
                             },
-                            success: function () {
+                            success: function() {
                                 console.log('Temporary PDF file deleted successfully');
                             },
-                            error: function () {
+                            error: function() {
                                 console.log('Failed to delete temporary PDF file');
                             },
                         });
-                    }, 5000); // Delay of 5 seconds
+                    }, 10000); // Delay of 5 seconds
 
                     // Reset button state
                     button.html('Download PDF');
@@ -1009,7 +1008,7 @@
                         timeOut: 1000, // Auto-dismiss after 1 second
                     });
                 },
-                error: function (error) {
+                error: function(error) {
                     console.log(error);
 
                     // Reset button state
@@ -1022,7 +1021,7 @@
                 },
             });
         });
-        $('.btn-email').click(function () {
+        $('.btn-email').click(function() {
             modal.style.display = 'flex';
         });
 
@@ -1193,7 +1192,7 @@
             var re = /\S+@\S+\.\S+/;
             return re.test(email);
         }
-        $('.sendEmail').click(function () {
+        $('.sendEmail').click(function() {
             var button = $(this);
             button.html('Sending...');
             button.prop('disabled', true);
@@ -1232,7 +1231,7 @@
                 data: formData2,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     if (response.status == 'success') {
                         button.html('Send PDF');
                         button.prop('disabled', false);
@@ -1248,7 +1247,7 @@
                     }
 
                 },
-                error: function (error) {
+                error: function(error) {
                     console.log(error);
                     button.html('Send PDF');
                     button.prop('disabled', false);
@@ -1317,9 +1316,7 @@
             return '';
         }
     </script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap"
-        async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap" async defer></script>
     <script>
         function convertToMoney(val) {
             // console.log("before" + val);

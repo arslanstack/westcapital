@@ -420,10 +420,12 @@ button {
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     color: #1d1d1d;
+    width: 75%;
+    margin: 20px auto;
 }
 
 .modal-content button {
-    padding: 10px 20px;
+    padding: 8px 20px;
     background: #ac38a1;
     color: #fff;
     border: none;
@@ -431,6 +433,7 @@ button {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    font-size: 15px;
   }
   .modal-content button .layer {
     position: absolute;

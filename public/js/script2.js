@@ -172,23 +172,39 @@ loanAmountInput.addEventListener('input', () => {
     
     
 
-    function calculateAPR(loanAmount, totalFees, loanTerm, interestRate) {
-        // Formula to approximate APR: ((totalCost - loanAmount) / loanAmount) / loanTerm
-        const monthlyRate = interestRate / 100 / 12;
-        const totalPayments = loanTerm * 12;
+    // function calculateAPR(loanAmount, totalFees, loanTerm, interestRate) {
+    //     // Formula to approximate APR: ((totalCost - loanAmount) / loanAmount) / loanTerm
+    //     const monthlyRate = interestRate / 100 / 12;
+    //     const totalPayments = loanTerm * 12;
 
-        let totalInterest = 0;
-        if (monthlyRate === 0) {
-            totalInterest = 0;
-        } else {
-            const totalLoanCost =
-                (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) /
-                (Math.pow(1 + monthlyRate, totalPayments) - 1);
-            totalInterest = totalLoanCost * totalPayments - loanAmount;
-        }
+    //     let totalInterest = 0;
+    //     if (monthlyRate === 0) {
+    //         totalInterest = 0;
+    //     } else {
+    //         const totalLoanCost =
+    //             (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) /
+    //             (Math.pow(1 + monthlyRate, totalPayments) - 1);
+    //         totalInterest = totalLoanCost * totalPayments - loanAmount;
+    //     }
 
-        const apr = ((totalInterest + totalFees) / loanAmount / loanTerm) * 100;
-        return apr.toFixed(2);
+    //     const apr = ((totalInterest + totalFees) / loanAmount / loanTerm) * 100;
+    //     return apr.toFixed(2);
+    // }
+
+    function calculateAPR(loanAmount, totalFees, loanTermYears, interestRate) {
+        // Convert interest rate to decimal
+        let rateDecimal = interestRate / 100;
+    
+        // Calculate total interest paid over the loan term
+        let totalInterest = loanAmount * rateDecimal * loanTermYears;
+    
+        // Total loan term in days
+        let loanTermDays = loanTermYears * 365;
+    
+        // Apply the APR formula
+        let apr = ((totalInterest + (totalFees * loanTermYears)) / loanAmount) / (loanTermDays / 365) * 100;
+    
+        return apr.toFixed(2); // Return APR rounded to 2 decimal places
     }
 
     

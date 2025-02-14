@@ -76,20 +76,57 @@ class PDFController extends Controller
         $data['total_escrow'] = number_format($data['escrow']['mip'] + $data['escrow']['insurance'] + $data['escrow']['property_tax'], 2, '.', '');
 
         $data['est_insurance'] = number_format(($data['homeinsurance'] / 12), 2, '.', '');
+        $data['show_est_insurance'] = true;
+        if ($data['est_insurance'] == 0) {
+            $data['show_est_insurance'] = false;
+        }
         $data['est_tax'] = number_format(($data['propertyTaxes'] / 12), 2, '.', '');
+        $data['show_est_tax'] = true;
+        if ($data['est_tax'] == 0) {
+            $data['show_est_tax'] = false;
+        }
+
         $data['est_mortgage'] = number_format(($data['mip']), 2, '.', '');
-        $data['total_est_monthly'] = number_format($data['est_insurance'] + $data['first_mortgage'] + $data['est_tax'] + $data['est_mortgage'], 2, '.', '');
+        $data['show_est_mortgage'] = true;
+        if ($data['est_mortgage'] == 0) {
+            $data['show_est_mortgage'] = false;
+        }
+        $data['est_hoa'] = number_format(($data['hoaFees']), 2, '.', '');
+        $data['show_est_hoa'] = true;
+        if ($data['est_hoa'] == 0) {
+            $data['show_est_hoa'] = false;
+        }
+        $data['show_first_mortgage'] = true;
+        if (number_format($data['first_mortgage']) == 0) {
+            $data['show_first_mortgage'] = false;
+        }
+        $data['total_est_monthly'] = number_format($data['est_insurance'] + $data['first_mortgage'] + $data['est_hoa'] + $data['est_tax'] + $data['est_mortgage'], 2, '.', '');
 
         $data['est_pv'] = $data['total_escrow'] + $data['total_prepaid'];
         $data['est_cc'] = $data['total_origin'] + 1579 + $data['total_loan_cost'] + $data['total_taxes_and_fee'] + $data['total_other'];
-        $data['tdbc'] = $request->seller_assistance ?? 0;
-        $data['total_est_table'] = $data['est_pv'] + $data['est_cc'] + $data['tdbc'] + $data['emd'] + $data['loan_amount'];
-        if ($data['loanType'] == 'purchasing') {
-            $data['total_est_table'] += $data['purchasePrice'];
+        // $data['tdbc'] = $request->seller_assistance ?? 0;
+
+        $data['down_payment'] = $request->downPaymentValue ?? 0;
+        if ($data['down_payment'] == 0 || $data['loanType'] == 'refinance') {
+            $data['down_payment'] = 0;
+            $data['show_down_payment'] = false;
         } else {
-            $data['total_est_table'] += $data['refinancePrice'];
+            $data['show_down_payment'] = true;
         }
+        $data['tdbc'] = $data['est_pv'] + $data['est_cc'] + $data['down_payment'];
         $data['emd'] = $request->emd ?? 0;
+        $data['show_emd'] = true;
+        if ($data['emd'] == 0) {
+            $data['emd'] = $request->emd ?? 0;
+            $data['show_emd'] = false;
+        }
+        $data['seller_assistance'] = $request->seller_assistance ?? 0;
+        $data['show_seller_assistance'] = true;
+        if ($data['seller_assistance'] == 0) {
+            $data['show_seller_assistance'] = false;
+        }
+
+        $data['total_est_table'] = $data['tdbc'] - $data['seller_assistance'] - $data['emd'];
         // dd($data['transfer_fee_breakdown_total'], $data['recording_fee_breakdown_total']);
         // dd($data['services_you_can_shop_for'], $data['total_loan_cost'], $data['taxes_and_other_govt_fees'], $data['other_fees'], $data['transfer_fee_breakdown'], $data['recording_fee_breakdown']);
         // dd($fee_response);
@@ -110,11 +147,11 @@ class PDFController extends Controller
         // foreach ($fee_response['otherApplicableFees'] as $fee) {
         //     $data['totalOtherApplicableFee'] += $fee['Amount'];
         // }
-        $data['date'] = date('Y-m-d');
+        $data['date'] = date('m/d/Y');
 
         // dd($data['borrowerFees']);
         $data['borrower_fee'] =
-            $pdf = PDF::loadView('pdf.template', $data);
+            $pdf = PDF::loadView('pdf.template', $data)->setPaper('legal', 'portrait');
         $filePath = 'generated_pdf_' . time() . '.pdf';
         $pdf->save(public_path('temporaryPDFs/' . $filePath));
         return response()->json([
@@ -126,7 +163,7 @@ class PDFController extends Controller
         // return response()->json([
         //     'status' => 'success',
         //     'message' => 'PDF generated successfully',
-        //     'pdf_url' => url(public/temporaryPDFs/' . $filePath),
+        //     'pdf_url' => url(temporaryPDFs/' . $filePath),
         //     'delete_url' => url('delete-pdf/' . $filePath)        
         // ]);
     }
@@ -251,22 +288,61 @@ class PDFController extends Controller
         $data['total_escrow'] = number_format($data['escrow']['mip'] + $data['escrow']['insurance'] + $data['escrow']['property_tax'], 2, '.', '');
 
         $data['est_insurance'] = number_format(($data['homeinsurance'] / 12), 2, '.', '');
+        $data['show_est_insurance'] = true;
+        if ($data['est_insurance'] == 0) {
+            $data['show_est_insurance'] = false;
+        }
         $data['est_tax'] = number_format(($data['propertyTaxes'] / 12), 2, '.', '');
+        $data['show_est_tax'] = true;
+        if ($data['est_tax'] == 0) {
+            $data['show_est_tax'] = false;
+        }
+
         $data['est_mortgage'] = number_format(($data['mip']), 2, '.', '');
-        $data['total_est_monthly'] = number_format($data['est_insurance'] + $data['first_mortgage'] + $data['est_tax'] + $data['est_mortgage'], 2, '.', '');
+        $data['show_est_mortgage'] = true;
+        if ($data['est_mortgage'] == 0) {
+            $data['show_est_mortgage'] = false;
+        }
+        $data['est_hoa'] = number_format(($data['hoaFees']), 2, '.', '');
+        $data['show_est_hoa'] = true;
+        if ($data['est_hoa'] == 0) {
+            $data['show_est_hoa'] = false;
+        }
+        $data['show_first_mortgage'] = true;
+        if (number_format($data['first_mortgage']) == 0) {
+            $data['show_first_mortgage'] = false;
+        }
+        $data['total_est_monthly'] = number_format($data['est_insurance'] + $data['first_mortgage'] + $data['est_hoa'] + $data['est_tax'] + $data['est_mortgage'], 2, '.', '');
+
         $data['est_pv'] = $data['total_escrow'] + $data['total_prepaid'];
         $data['est_cc'] = $data['total_origin'] + 1579 + $data['total_loan_cost'] + $data['total_taxes_and_fee'] + $data['total_other'];
-        $data['tdbc'] = $request->seller_assistance ?? 0;
-        $data['total_est_table'] = $data['est_pv'] + $data['est_cc'] + $data['tdbc'] + $data['emd'] + $data['loan_amount'];
-        if ($data['loanType'] == 'purchasing') {
-            $data['total_est_table'] += $data['purchasePrice'];
+        // $data['tdbc'] = $request->seller_assistance ?? 0;
+
+        $data['down_payment'] = $request->downPaymentValue ?? 0;
+        if ($data['down_payment'] == 0 || $data['loanType'] == 'refinance') {
+            $data['down_payment'] = 0;
+            $data['show_down_payment'] = false;
         } else {
-            $data['total_est_table'] += $data['refinancePrice'];
+            $data['show_down_payment'] = true;
         }
+        $data['tdbc'] = $data['est_pv'] + $data['est_cc'] + $data['down_payment'];
         $data['emd'] = $request->emd ?? 0;
-        $data['date'] = date('Y-m-d');
+        $data['show_emd'] = true;
+        if ($data['emd'] == 0) {
+            $data['emd'] = $request->emd ?? 0;
+            $data['show_emd'] = false;
+        }
+        $data['seller_assistance'] = $request->seller_assistance ?? 0;
+        $data['show_seller_assistance'] = true;
+        if ($data['seller_assistance'] == 0) {
+            $data['show_seller_assistance'] = false;
+        }
+
+        $data['total_est_table'] = $data['tdbc'] - $data['seller_assistance'] - $data['emd'];
+
+        $data['date'] = date('m/d/Y');
         // dd($request->sendingemail);
-        $pdf = PDF::loadView('pdf.template', $data);
+        $pdf = PDF::loadView('pdf.template', $data)->setPaper('legal', 'portrait');
         $filePath = 'generated_pdf_' . time() . '.pdf';
         $pdf->save(public_path('temporaryPDFs/' . $filePath));
         $mail = Mail::to($request->sendingemail)->send(new ReportMail(public_path('temporaryPDFs/' . $filePath)));
