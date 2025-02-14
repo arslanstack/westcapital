@@ -28,8 +28,20 @@ class PDFController extends Controller
             ], 404);
         }
         $fee_response = json_decode($request->fee_response_json, true);
+        $data['showDis'] = false;
+        if (!$data['discount_points'] || $data['discount_points'] == '' || $data['discount_points'] == null) {
+            $data['discount_points'] = 0.00;
+            $data['showDis'] = false;
+        } else {
+            $data['discount_points'] = number_format($data['discount_points'], 2, '.', '');
+            $data['showDis'] = true;
+        }
+        $data['first_mortgage'] = $request->principalAndInterest;
+        $data['total_origin'] = number_format($data['discount_points'] + 1050, 2, '.', '');
         $data['services_you_can_shop_for'] = $fee_response['data']['services_you_can_shop_for'];
         $data['total_loan_cost'] = $fee_response['data']['total_loan_cost'];
+        $data['total_loan_cost_table_d'] = $fee_response['data']['total_loan_cost'] + $data['discount_points'] + 1050 + 1579;
+
         $data['taxes_and_other_govt_fees'] = $fee_response['data']['taxes_and_other_govt_fees'];
         $data['total_taxes_and_fee'] = 0;
         foreach ($fee_response['data']['taxes_and_other_govt_fees'] as $fee_name => $fee_amount) {
@@ -40,10 +52,44 @@ class PDFController extends Controller
         foreach ($fee_response['data']['other_fees'] as $fee_name => $fee_amount) {
             $data['total_other'] += $fee_amount;
         }
-        $data['transfer_fee_breakdown'] = $fee_response['data']['transfer_fee_breakdown'];
-        $data['transfer_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['transfer_tax'];
-        $data['recording_fee_breakdown'] = $fee_response['data']['recording_fee_breakdown'];
-        $data['recording_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['recording_fee'];
+        if ($data['loanType'] == 'refinance') {
+            $data['downPaymentValue'] = 0;
+        }
+        $data['prepaid_items'] = [];
+        // following items would be in it
+        // Mortgage Insurance Premium (5 months) = (mip/12) * 5
+        // Home Insurance (5 months):  = (homeinsurance/12) * 5
+        // Property Taxes (5 months): = (propertyTaxes/12) * 5
+
+        // total_prepaid would be there total
+        // now lets create the prepaid items
+
+        $data['prepaid_items']['mip'] = number_format(($data['mip'] / 12) * 5, 2, '.', '');
+        $data['prepaid_items']['insurance'] = number_format(($data['homeinsurance'] / 12) * 5, 2, '.', '');
+        $data['prepaid_items']['property_tax'] = number_format(($data['propertyTaxes'] / 12) * 5, 2, '.', '');
+        $data['total_prepaid'] = number_format($data['prepaid_items']['mip'] + $data['prepaid_items']['insurance'] + $data['prepaid_items']['property_tax'], 2, '.', '');
+
+
+        $data['escrow']['mip'] = number_format(($data['mip'] / 12) * 2, 2, '.', '');
+        $data['escrow']['insurance'] = number_format(($data['homeinsurance'] / 12) * 2, 2, '.', '');
+        $data['escrow']['property_tax'] = number_format(($data['propertyTaxes'] / 12) * 2, 2, '.', '');
+        $data['total_escrow'] = number_format($data['escrow']['mip'] + $data['escrow']['insurance'] + $data['escrow']['property_tax'], 2, '.', '');
+
+        $data['est_insurance'] = number_format(($data['homeinsurance'] / 12), 2, '.', '');
+        $data['est_tax'] = number_format(($data['propertyTaxes'] / 12), 2, '.', '');
+        $data['est_mortgage'] = number_format(($data['mip']), 2, '.', '');
+        $data['total_est_monthly'] = number_format($data['est_insurance'] + $data['first_mortgage'] + $data['est_tax'] + $data['est_mortgage'], 2, '.', '');
+
+        $data['est_pv'] = $data['total_escrow'] + $data['total_prepaid'];
+        $data['est_cc'] = $data['total_origin'] + 1579 + $data['total_loan_cost'] + $data['total_taxes_and_fee'] + $data['total_other'];
+        $data['tdbc'] = $request->seller_assistance ?? 0;
+        $data['total_est_table'] = $data['est_pv'] + $data['est_cc'] + $data['tdbc'] + $data['emd'] + $data['loan_amount'];
+        if ($data['loanType'] == 'purchasing') {
+            $data['total_est_table'] += $data['purchasePrice'];
+        } else {
+            $data['total_est_table'] += $data['refinancePrice'];
+        }
+        $data['emd'] = $request->emd ?? 0;
         // dd($data['transfer_fee_breakdown_total'], $data['recording_fee_breakdown_total']);
         // dd($data['services_you_can_shop_for'], $data['total_loan_cost'], $data['taxes_and_other_govt_fees'], $data['other_fees'], $data['transfer_fee_breakdown'], $data['recording_fee_breakdown']);
         // dd($fee_response);
@@ -80,7 +126,7 @@ class PDFController extends Controller
         // return response()->json([
         //     'status' => 'success',
         //     'message' => 'PDF generated successfully',
-        //     'pdf_url' => url('public/temporaryPDFs/' . $filePath),
+        //     'pdf_url' => url(public/temporaryPDFs/' . $filePath),
         //     'delete_url' => url('delete-pdf/' . $filePath)        
         // ]);
     }
@@ -157,8 +203,20 @@ class PDFController extends Controller
             ], 404);
         }
         $fee_response = json_decode($request->fee_response_json, true);
+        $data['showDis'] = false;
+        if (!$data['discount_points'] || $data['discount_points'] == '' || $data['discount_points'] == null) {
+            $data['discount_points'] = 0.00;
+            $data['showDis'] = false;
+        } else {
+            $data['discount_points'] = number_format($data['discount_points'], 2, '.', '');
+            $data['showDis'] = true;
+        }
+        $data['first_mortgage'] = $request->principalAndInterest;
+        $data['total_origin'] = number_format($data['discount_points'] + 1050, 2, '.', '');
         $data['services_you_can_shop_for'] = $fee_response['data']['services_you_can_shop_for'];
         $data['total_loan_cost'] = $fee_response['data']['total_loan_cost'];
+        $data['total_loan_cost_table_d'] = $fee_response['data']['total_loan_cost'] + $data['discount_points'] + 1050 + 1579;
+
         $data['taxes_and_other_govt_fees'] = $fee_response['data']['taxes_and_other_govt_fees'];
         $data['total_taxes_and_fee'] = 0;
         foreach ($fee_response['data']['taxes_and_other_govt_fees'] as $fee_name => $fee_amount) {
@@ -169,10 +227,43 @@ class PDFController extends Controller
         foreach ($fee_response['data']['other_fees'] as $fee_name => $fee_amount) {
             $data['total_other'] += $fee_amount;
         }
-        $data['transfer_fee_breakdown'] = $fee_response['data']['transfer_fee_breakdown'];
-        $data['transfer_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['transfer_tax'];
-        $data['recording_fee_breakdown'] = $fee_response['data']['recording_fee_breakdown'];
-        $data['recording_fee_breakdown_total'] = $data['taxes_and_other_govt_fees']['recording_fee'];
+        if ($data['loanType'] == 'refinance') {
+            $data['downPaymentValue'] = 0;
+        }
+        $data['prepaid_items'] = [];
+        // following items would be in it
+        // Mortgage Insurance Premium (5 months) = (mip/12) * 5
+        // Home Insurance (5 months):  = (homeinsurance/12) * 5
+        // Property Taxes (5 months): = (propertyTaxes/12) * 5
+
+        // total_prepaid would be there total
+        // now lets create the prepaid items
+
+        $data['prepaid_items']['mip'] = number_format(($data['mip'] / 12) * 5, 2, '.', '');
+        $data['prepaid_items']['insurance'] = number_format(($data['homeinsurance'] / 12) * 5, 2, '.', '');
+        $data['prepaid_items']['property_tax'] = number_format(($data['propertyTaxes'] / 12) * 5, 2, '.', '');
+        $data['total_prepaid'] = number_format($data['prepaid_items']['mip'] + $data['prepaid_items']['insurance'] + $data['prepaid_items']['property_tax'], 2, '.', '');
+
+
+        $data['escrow']['mip'] = number_format(($data['mip'] / 12) * 2, 2, '.', '');
+        $data['escrow']['insurance'] = number_format(($data['homeinsurance'] / 12) * 2, 2, '.', '');
+        $data['escrow']['property_tax'] = number_format(($data['propertyTaxes'] / 12) * 2, 2, '.', '');
+        $data['total_escrow'] = number_format($data['escrow']['mip'] + $data['escrow']['insurance'] + $data['escrow']['property_tax'], 2, '.', '');
+
+        $data['est_insurance'] = number_format(($data['homeinsurance'] / 12), 2, '.', '');
+        $data['est_tax'] = number_format(($data['propertyTaxes'] / 12), 2, '.', '');
+        $data['est_mortgage'] = number_format(($data['mip']), 2, '.', '');
+        $data['total_est_monthly'] = number_format($data['est_insurance'] + $data['first_mortgage'] + $data['est_tax'] + $data['est_mortgage'], 2, '.', '');
+        $data['est_pv'] = $data['total_escrow'] + $data['total_prepaid'];
+        $data['est_cc'] = $data['total_origin'] + 1579 + $data['total_loan_cost'] + $data['total_taxes_and_fee'] + $data['total_other'];
+        $data['tdbc'] = $request->seller_assistance ?? 0;
+        $data['total_est_table'] = $data['est_pv'] + $data['est_cc'] + $data['tdbc'] + $data['emd'] + $data['loan_amount'];
+        if ($data['loanType'] == 'purchasing') {
+            $data['total_est_table'] += $data['purchasePrice'];
+        } else {
+            $data['total_est_table'] += $data['refinancePrice'];
+        }
+        $data['emd'] = $request->emd ?? 0;
         $data['date'] = date('Y-m-d');
         // dd($request->sendingemail);
         $pdf = PDF::loadView('pdf.template', $data);

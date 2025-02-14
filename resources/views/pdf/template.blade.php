@@ -19,7 +19,7 @@
     }
 
     .outer_container {
-      width: 70%;
+      width: 95%;
       margin: auto;
     }
 
@@ -152,7 +152,7 @@
               <tbody>
                 <tr>
                   <td>Property Value:</td>
-                  <td><strong>${{$loanType == 'purchasing' ? $purchasePrice : $refinancePrice}}</strong></td>
+                  <td><strong>${{convertToMoney($loanType == 'purchasing' ? $purchasePrice : $refinancePrice)}}</strong></td>
 
                 </tr>
                 <tr>
@@ -164,10 +164,12 @@
                   <td>Product:</td>
                   <td><strong>{{$loanType2}}</strong></td>
                 </tr>
+                @if($loanType == 'purchasing')
                 <tr>
-                  <td>DownPayment:</td>
-                  <td><strong>${{$downPaymentValue}}</strong></td>
+                  <td>Down Payment:</td>
+                  <td><strong>{{convertToMoney(($downPaymentValue/($loanType == 'purchasing' ? $purchasePrice : $refinancePrice)) * 100)}} %</strong></td>
                 </tr>
+                @endif
               </tbody>
             </table>
           </div>
@@ -179,7 +181,7 @@
               <tbody>
                 <tr>
                   <td>Loan Amount</td>
-                  <td><strong>${{$loan_amount}}</strong></td>
+                  <td><strong>${{convertToMoney($loan_amount)}}</strong></td>
 
                 </tr>
                 <tr>
@@ -202,7 +204,7 @@
               <tbody>
                 <tr>
                   <td>Total Loan Amount:</td>
-                  <td><strong>${{$loan_amount}}</strong></td>
+                  <td><strong>${{convertToMoney($loan_amount)}}</strong></td>
 
                 </tr>
                 <tr>
@@ -229,25 +231,33 @@
               <thead>
                 <tr>
                   <th>A. Origination Charges</th>
-                  <th>$ 1050.00</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Underwritting Fee:</td>
-                  <td>$ 1050.00</td>
+                  <td>$ 1,050.00</td>
                 </tr>
+                @if($showDis)
                 <tr>
                   <td>Discount Points:</td>
-                  <td>$ 0.00</td>
+                  <td>$ {{convertToMoney($discount_points)}}</td>
                 </tr>
+                @endif
               </tbody>
+              <thead>
+                <tr>
+                  <th>Total Origination Charges</th>
+                  <th>$ {{convertToMoney($total_origin)}}</th>
+                </tr>
+              </thead>
             </table>
             <table>
               <thead>
                 <tr>
                   <th>B. Services You Cannot Shop For</th>
-                  <th>$ 1579.00</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -272,28 +282,40 @@
                   <td>$ 85.00</td>
                 </tr>
               </tbody>
+              <thead>
+                <tr>
+                  <th>Total Services You Cannot Shop For</th>
+                  <th>$ 1,579.00</th>
+                </tr>
+              </thead>
             </table>
             <table>
               <thead>
                 <tr>
-                  <th>C. Services You Can Shop For:</th>
-                  <th>$ {{$total_loan_cost}}</th>
+                  <th>C. Services You Can Shop For</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($services_you_can_shop_for as $fee)
                 <tr>
                   <td>{{$fee['FeeName']}}</td>
-                  <td>${{$fee['Amount']}}</td>
+                  <td>${{convertToMoney($fee['Amount'])}}</td>
                 </tr>
                 @endforeach
               </tbody>
+              <thead>
+                <tr>
+                  <th>Total Services You Can Shop For</th>
+                  <th>${{convertToMoney($total_loan_cost)}}</th>
+                </tr>
+              </thead>
             </table>
             <table>
               <thead>
                 <tr>
                   <th>D. TOTAL LOAN COSTS</th>
-                  <th>$ {{$total_loan_cost}}</th>
+                  <th>$ {{convertToMoney($total_loan_cost_table_d)}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -309,156 +331,165 @@
               <tbody>
                 <tr>
                   <td>Purchase Price</td>
-                  <td>${{$loanType == 'purchasing' ? $purchasePrice : $refinancePrice}}</td>
+                  <td>${{convertToMoney($loanType == 'purchasing' ? $purchasePrice : $refinancePrice)}}</td>
                 </tr>
                 <tr>
                   <td>Estimated Prepaid Items</td>
-                  <td>demo</td>
+                  <td>$ {{convertToMoney($est_pv)}}</td>
                 </tr>
                 <tr>
                   <td>Estimate Closing Cost</td>
-                  <td>demo</td>
+                  <td>$ {{convertToMoney($est_cc)}}</td>
                 </tr>
                 <tr>
                   <td>Total Due from Borrower at Closing (K)</td>
-                  <td>demo</td>
+                  <td>$ {{convertToMoney($tdbc)}}</td>
                 </tr>
                 <tr>
-                  <td>Seller Credit</td>
-                  <td>demo</td>
+                  <td>EMD</td>
+                  <td>$ {{convertToMoney($emd)}}</td>
                 </tr>
                 <tr>
                   <td>Loan Amount</td>
-                  <td>${{$loan_amount}}</td>
-                </tr>
-                <tr>
-                  <td>Total Paid Already by or on Behalf of Borrower at Closing (L)</td>
-                  <td>demo</td>
+                  <td>$ {{convertToMoney($loan_amount)}}</td>
                 </tr>
                 <thead>
                   <tr>
                     <th>Total Estimated Funds To Y0u</th>
-                    <th> $demo</th>
+                    <th>$ {{convertToMoney($total_est_table)}}</th>
                   </tr>
                 </thead>
               </tbody>
             </table>
           </div>
         </td>
-        <td style="width: 50%;">
+        <td style="display:grid;">
           <!-- Second Column -->
           <div class="column">
             <table>
               <thead>
                 <tr>
                   <th>E. Taxes and Other Government Fees </th>
-                  <th>$ {{$total_taxes_and_fee}}</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($taxes_and_other_govt_fees as $fee_name => $fee_amount)
                 <tr>
                   <td>{{ ucfirst(str_replace('_', ' ', $fee_name)) }}</td> <!-- Convert snake_case to readable text -->
-                  <td>${{ number_format($fee_amount, 2) }}</td> <!-- Format as currency -->
+                  <td>${{ convertToMoney($fee_amount, 2) }}</td> <!-- Format as currency -->
                 </tr>
                 @endforeach
               </tbody>
-            </table>
-            <table>
-              <thead style="background-color:rgb(240, 154, 154) !important;">
+              <thead>
                 <tr>
-                  <th>E-1. Taxes Breakdown </th>
-                  <th>$ {{$transfer_fee_breakdown_total}}</th>
+                  <th>Total Taxes and Other Government Fees </th>
+                  <th>$ {{convertToMoney($total_taxes_and_fee)}}</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach($transfer_fee_breakdown as $fee)
-                <tr>
-                  <td>{{$fee['FeeName']}}</td>
-                  <td>${{$fee['Amount']}}</td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-            <table>
-              <thead style="background-color:rgb(240, 154, 154) !important;">
-                <tr>
-                  <th>E-2. Recording Breakdown </th>
-                  <th>$ {{$recording_fee_breakdown_total}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($recording_fee_breakdown as $fee)
-                <tr>
-                  <td>{{$fee['FeeName']}}</td>
-                  <td>${{$fee['Amount']}}</td>
-                </tr>
-                @endforeach
-              </tbody>
             </table>
             <table>
               <thead>
                 <tr>
                   <th>F. Prepaids </th>
-                  <th>$ 0.00</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Homeowner's Insurance Premium (months)</td>
-                  <td>$0.00</td>
+                  <td>Property Taxes (5 months):</td>
+                  <td>${{convertToMoney($prepaid_items['property_tax'])}}</td>
                 </tr>
                 <tr>
-                  <td>Mortgage Insurance Premium (months)</td>
-                  <td>$0.00</td>
-                </tr>
-                <tr>
-                  <td>Prepaid Interest (per day for days @ )</td>
-                  <td>$0.00</td>
-                </tr>
-                <tr>
-                  <td>Property Taxes (months)</td>
-                  <td>$0.00</td>
+                  <td>Home Insurance (5 months):</td>
+                  <td>${{convertToMoney($prepaid_items['insurance'])}}</td>
                 </tr>
               </tbody>
+              <thead>
+                <tr>
+                  <th>Total Prepaids </th>
+                  <th>${{convertToMoney($total_prepaid)}}</th>
+                </tr>
+              </thead>
             </table>
             <table>
               <thead>
                 <tr>
                   <th>G. Initial Escrow Payment at Closing </th>
-                  <th>$ 0.00</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Homeowner's Insurance per month for mo.</td>
-                  <td>$0.00</td>
+                  <td>Property Taxes (2 months):</td>
+                  <td>${{convertToMoney($escrow['property_tax'])}}</td>
                 </tr>
                 <tr>
-                  <td>Mortgage Insurance per month for mo. </td>
-                  <td>$0.00</td>
-                </tr>
-                <tr>
-                  <td>Property Taxes per month for mo.</td>
-                  <td>$0.00</td>
+                  <td>Home Insurance (2 months):</td>
+                  <td>${{convertToMoney($escrow['insurance'])}}</td>
                 </tr>
               </tbody>
+              <thead>
+                <tr>
+                  <th>Total Initial Escrow Payment at Closing </th>
+                  <th>${{convertToMoney($total_escrow)}}</th>
+                </tr>
+              </thead>
             </table>
+
             <table>
               <thead>
                 <tr>
                   <th>H. Other</th>
-                  <th>$ {{$total_other}}</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($other_fees as $fee_name => $fee_amount)
                 <tr>
                   <td>{{ ucwords(str_replace('_', ' ', $fee_name)) }}</td> <!-- Format fee name -->
-                  <td>${{ number_format($fee_amount, 2) }}</td> <!-- Format amount as currency -->
+                  <td>${{ convertToMoney($fee_amount, 2) }}</td> <!-- Format amount as currency -->
                 </tr>
                 @endforeach
               </tbody>
+              <thead>
+                <tr>
+                  <th>Total Other</th>
+                  <th>$ {{convertToMoney($total_other)}}</th>
+                </tr>
+              </thead>
+            </table>
+            <table>
+              <thead>
+                <tr>
+                  <th>I. Total Estimated Monthly Housing Payment</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>First Mortgage Payment:</td>
+                  <td>${{ convertToMoney($first_mortgage) }}</td>
+                </tr>
+                <tr>
+                  <td>Hazard Insurance:</td>
+                  <td>${{ convertToMoney($est_insurance) }}</td>
+                </tr>
+                <tr>
+                  <td>Property Tax:</td>
+                  <td>${{ convertToMoney($est_tax) }}</td>
+                </tr>
+                <tr>
+                  <td>Mortgage Insurance:</td>
+                  <td>${{ convertToMoney($est_mortgage) }}</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Total Total Estimated Monthly Housing Payment</th>
+                  <th>${{convertToMoney($total_est_monthly)}}</th>
+                </tr>
+              </thead>
             </table>
           </div>
         </td>

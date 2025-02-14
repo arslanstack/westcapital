@@ -30,30 +30,147 @@ function initCalculator() {
     const monthlyPaymentDisplay = document.getElementById('monthlyPayment');
     const loanAmountInput = document.getElementById('loan_amount');
     const aprInput = document.getElementById('apr'); // New input for APR
-
+    
     function updateDownPayment(isPercentUpdated) {
         const price =
-            loanTypeSelect.value === 'purchasing' ?
-                parseFloat(purchasePriceInput.value) :
-                parseFloat(refinancePriceInput.value);
+            loanTypeSelect.value === 'purchasing'
+                ? parseFloat(purchasePriceInput.value)
+                : parseFloat(refinancePriceInput.value);
+    
         if (isPercentUpdated) {
-            const percent = parseFloat(downPaymentPercentInput.value) || 0;
-            downPaymentValueInput.value = ((percent / 100) * price);
+            let percent = parseFloat(downPaymentPercentInput.value) ;
+    
+            // Allow decimal values and ensure the percentage is between 0 and 100
+            percent = Math.min(Math.max(percent, 0), 100);
+    
+            downPaymentPercentInput.value = percent; // Keep two decimal places
+            downPaymentValueInput.value = Math.round((percent / 100) * price);
         } else {
-            const value = parseFloat(downPaymentValueInput.value) || 0;
-            downPaymentPercentInput.value = ((value / price) * 100);
+            let value = parseFloat(downPaymentValueInput.value) ;
+    
+            // Ensure down payment does not exceed purchase price
+            value = Math.min(Math.max(value, 0), price);
+            // downPaymentValueInput.value = Math.round(value);
+            downPaymentValueInput.value = (Math.abs(value - Math.round(value)) < 1e-10) ? Math.round(value) : value;
+            // downPaymentPercentInput.value =((value / price) * 100);
+            let val1 =((value / price) * 100);
+            downPaymentPercentInput.value = (Math.abs(val1 - Math.round(val1)) < 1e-10) ? Math.round(val1) : val1;
         }
-        calculateLTV();
-        calculateMonthlyPayment();
+    
+        calculateLTV(); // Ensure loan amount updates when down payment changes
     }
+    
+    
+    
+    
 
     function calculateLTV() {
-        const refinancePrice = parseFloat(refinancePriceInput.value) || 0;
-        const downPaymentValue = parseFloat(downPaymentValueInput.value) || 0;
-        const loanAmount = refinancePrice - downPaymentValue;
-        const ltv = (loanAmount / refinancePrice) * 100;
-        ltvInput.value = ltv.toFixed(2);
+        const price = loanTypeSelect.value === 'purchasing' ?
+            parseFloat(purchasePriceInput.value) :
+            parseFloat(refinancePriceInput.value);
+    
+        const downPaymentValue = parseFloat(downPaymentValueInput.value) || "";
+        const emdValue = parseFloat(emdInput.value) || "";
+        let loanAmount;
+        let ltv;
+    
+        if (loanTypeSelect.value === 'refinance') {
+            // Refinance: Loan amount is based on LTV
+            loanAmount = (parseFloat(ltvInput.value) / 100) * price;
+        } else {
+            // Purchase: Loan amount is price minus down payment and EMD
+            loanAmount = price - downPaymentValue - emdValue;
+        }
+    
+        // Ensure Loan Amount does not exceed Price
+        if (loanAmount > price) {
+            loanAmount = price;
+        }
+    
+        // Calculate LTV
+        ltv = (loanAmount / price) * 100;
+    
+        // Ensure LTV is between 1% and 100%
+        if (ltv < 0) {
+            ltv = 0;
+        } else if (ltv > 100) {
+            ltv = 100;
+        }
+    
+        // Update inputs
+        // loanAmountInput.value =loanAmount;
+        loanAmountInput.value =(Math.abs(loanAmount - Math.round(loanAmount)) < 1e-10) ? Math.round(loanAmount) : loanAmount;
+        ltvInput.value = (Math.abs(ltv - Math.round(ltv)) < 1e-10) ? Math.round(ltv) : ltv;
+    
+        // Enable/disable input based on loan type
+        // if (loanTypeSelect.value === 'refinance') {
+        //     loanAmountInput.removeAttribute('readonly');
+        //     loanAmountInput.classList.remove('dis');
+        // } else {
+        //     loanAmountInput.setAttribute('readonly', 'true');
+        //     loanAmountInput.classList.add('dis');
+        // }
+    
+        calculateMonthlyPayment();
     }
+    
+   // Event Listener for LTV Input Change
+   function newFunc(){
+    if (loanTypeSelect.value === 'refinance') {
+        const price = parseFloat(refinancePriceInput.value) || "";
+        let ltv = parseFloat(ltvInput.value) || "";
+        let loanAmount = (ltv / 100) * price;
+
+        // Ensure Loan Amount does not exceed Price
+        if (loanAmount > price) {
+            loanAmount = price;
+            ltv = 100; // If loan amount is max, set LTV to 100%
+        }
+
+        loanAmountInput.value = Math.round(loanAmount);
+        ltvInput.value = ltv;
+    }
+    calculateMonthlyPayment();
+}
+let timeout;
+ltvInput.addEventListener('input', () => {
+    clearTimeout(timeout); // Clear any existing timeout to prevent multiple triggers
+    timeout = setTimeout(newFunc, 1500); // Delay execution by 1 second (1000ms)
+    // timeout = setTimeout(calculateMonthlyPayment, 1500);
+});
+
+// Event Listener for Loan Amount Input Change
+function newFunc2() {
+    const price = loanTypeSelect.value === 'purchasing' ?
+        parseFloat(purchasePriceInput.value) :
+        parseFloat(refinancePriceInput.value);
+
+    let loanAmount = parseFloat(loanAmountInput.value) || 0;
+    let ltv = (loanAmount / price) * 100;
+
+    // Ensure Loan Amount does not exceed Price
+    if (loanAmount > price) {
+        loanAmount = price;
+        ltv = 100; // If loan amount is max, set LTV to 100%
+    }
+
+    loanAmountInput.value = loanAmount;
+
+    // Fix floating-point precision issues like 55.00000000000001 but keep exact values
+    ltvInput.value = (Math.abs(ltv - Math.round(ltv)) < 1e-10) ? Math.round(ltv) : ltv;
+
+    calculateMonthlyPayment();
+}
+
+
+loanAmountInput.addEventListener('input', () => {
+    clearTimeout(timeout); // Clear any existing timeout to prevent multiple triggers
+    timeout = setTimeout(newFunc2, 1500); // Delay execution by 1 second (1000ms)
+    // timeout = setTimeout(calculateMonthlyPayment, 1500);
+});
+
+    
+    
 
     function calculateAPR(loanAmount, totalFees, loanTerm, interestRate) {
         // Formula to approximate APR: ((totalCost - loanAmount) / loanAmount) / loanTerm
@@ -74,98 +191,155 @@ function initCalculator() {
         return apr.toFixed(2);
     }
 
-    function calculateMonthlyPayment() {
-        const price =
-            loanTypeSelect.value === 'purchasing' ?
-                parseFloat(purchasePriceInput.value) :
-                parseFloat(refinancePriceInput.value);
-        const downPaymentValue = parseFloat(downPaymentValueInput.value) || 0;
-        const loanTerm = parseFloat(loanTermInput.value) || 0;
-        const interestRate = parseFloat(interestRateInput.value) || 0;
-        const propertyTaxes = parseFloat(propertyTaxesInput.value) || 0;
-        const homeInsurance = parseFloat(homeInsuranceInput.value) || 0;
-        const hoaFees = parseFloat(hoaFeesInput.value) || 0;
-        const emdValue = parseFloat(emdInput.value) || 0;
-
-        const loanAmount = price - downPaymentValue - emdValue;
-        loanAmountInput.value = loanAmount;
-
-        const monthlyRate = interestRate / 100 / 12;
-        const totalPayments = loanTerm * 12;
-
-        let principalAndInterest = 0;
-        if (monthlyRate === 0) {
-            principalAndInterest = loanAmount / totalPayments;
-        } else {
-            principalAndInterest =
-                (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) /
-                (Math.pow(1 + monthlyRate, totalPayments) - 1);
-        }
-
-        document.getElementById('principalInterest').textContent =
-            principalAndInterest.toFixed(2);
-        document.getElementById('homeInsuranceDisplay').textContent = (
-            homeInsurance / 12
-        ).toFixed(2);
-        document.getElementById('propertyTaxDisplay').textContent = (
-            propertyTaxes / 12
-        ).toFixed(2);
-        document.getElementById('hoaFeesDisplay').textContent = hoaFees.toFixed(2);
-
-        const totalMonthlyPayment =
-            principalAndInterest +
-            propertyTaxes / 12 +
-            homeInsurance / 12 +
-            hoaFees;
-        document.getElementById('monthlyPayment').textContent =
-            totalMonthlyPayment.toFixed(0);
-
-        const totalFees = parseFloat(propertyTaxes) + parseFloat(homeInsurance); // Add other fees here if needed
-        const apr = calculateAPR(loanAmount, totalFees, loanTerm, interestRate);
-        aprInput.value = apr; // Display APR in the input field
-
-        updateDownPayment(true);
-        calculateLTV();
-    }
-    // Initialize event listeners
+    
     purchasePriceInput.addEventListener('input', calculateMonthlyPayment);
+    purchasePriceInput.addEventListener('input', calculateLTV);
+    purchasePriceInput.addEventListener('input', () => updateDownPayment(true));
+    purchasePriceInput.addEventListener('input', () => updateDownPayment(false));
+    // downPaymentValueInput.addEventListener('input', calculateMonthlyPayment);
+    // downPaymentPercentInput.addEventListener('input', calculateMonthlyPayment);
     refinancePriceInput.addEventListener('input', calculateMonthlyPayment);
-    downPaymentPercentInput.addEventListener('input', () => updateDownPayment(true));
-    downPaymentValueInput.addEventListener('input', () => updateDownPayment(false));
-    ltvInput.addEventListener('input', calculateLTV); // Manually update LTV
+    refinancePriceInput.addEventListener('input', calculateMonthlyPayment);
+    refinancePriceInput.addEventListener('input', calculateLTV);
+    // loanAmountInput.addEventListener('input', calculateMonthlyPayment);
+    // loanAmountInput.addEventListener('input', calculateLTV);
+
+    downPaymentPercentInput.addEventListener('input', () => {
+        clearTimeout(timeout); // Clear any existing timeout to prevent multiple triggers
+        timeout = setTimeout(() => updateDownPayment(true), 1500); // Delay execution by 1 second (1000ms)
+    });
+
+    downPaymentValueInput.addEventListener('input', () => {
+        clearTimeout(timeout); // Clear any existing timeout to prevent multiple triggers
+        timeout = setTimeout(() => updateDownPayment(false), 1500); // Delay execution by 1 second (1000ms)
+    });
+    // downPaymentPercentInput.addEventListener('input', () => updateDownPayment(true));
+    // downPaymentValueInput.addEventListener('input', () => updateDownPayment(false));
+    // ltvInput.addEventListener('input', calculateLTV); 
     loanTermInput.addEventListener('input', calculateMonthlyPayment);
     interestRateInput.addEventListener('input', calculateMonthlyPayment);
     propertyTaxesInput.addEventListener('input', calculateMonthlyPayment);
     homeInsuranceInput.addEventListener('input', calculateMonthlyPayment);
     hoaFeesInput.addEventListener('input', calculateMonthlyPayment);
+    emd.addEventListener('input', calculateLTV);
     emd.addEventListener('input', calculateMonthlyPayment);
     emd.addEventListener('input', () => updateDownPayment(true));
 
     // Adjust display based on loan type
     loanTypeSelect.addEventListener('change', () => {
         const isRefinance = loanTypeSelect.value === 'refinance';
-
+    
         if (isRefinance) {
+            // Show Refinance-related fields
             refinancePriceWrapper.style.display = 'flex';
             purchasePriceWrapper.style.display = 'none';
-            // downPaymentWrapper.style.display = 'none';
+            downPaymentWrapper.style.display = 'none';  // Hide down payment field in refinance case
             emdWrapper.style.display = 'none';
-            ltvWrapper.style.display = 'flex';
-            emd.value = "0";
-            calculateLTV(); // Calculate LTV if refinance is selected
+            ltvWrapper.style.display = 'flex';  // Show LTV field
+            emd.value = "0";  // Reset EMD to 0 for refinance
+            ltvInput.disabled = false;  // Enable LTV field for refinance
+            loanAmountInput.removeAttribute('readonly');
+            loanAmountInput.classList.remove('dis');
+            // Default loan term for refinance (e.g., 15 years)
+            loanTermInput.value = '15'; // Set default loan term to 15 years for refinance
+            loanTermInput.disabled = false;  // Keep loan term field enabled for refinance
+            refinancePriceInput.value="100000"
+            loanAmountInput.value="80000";
+            ltvInput.value="80";
         } else {
+            // Show Purchase-related fields
             refinancePriceWrapper.style.display = 'none';
             purchasePriceWrapper.style.display = 'flex';
-            downPaymentWrapper.style.display = 'flex';
+            downPaymentWrapper.style.display = 'flex';  // Show down payment field in purchase case
             emdWrapper.style.display = 'flex';
-            ltvWrapper.style.display = 'none';
+            ltvWrapper.style.display = 'none';  // Hide LTV field for purchase
+            ltvInput.disabled = true;  // Disable LTV field for purchase
+            loanAmountInput.setAttribute('readonly', 'true');
+            loanAmountInput.classList.add('dis');
+            loanTermInput.disabled = false;  // Enable loan term field for purchase
+            loanAmountInput.value="80000";
+            downPaymentValueInput.value="20000";
+            downPaymentPercentInput.value="20";
+            purchasePriceInput.value="100000";
         }
+    
+        // Recalculate values when loan type changes
         calculateMonthlyPayment();
     });
+    
+    // Ensure loan term input is triggering recalculation
+    loanTermInput.addEventListener('input', () => {
+        calculateMonthlyPayment();  // Recalculate whenever loan term is updated
+    });
+    
+    function calculateMonthlyPayment() {
+        const loanAmount = parseFloat(loanAmountInput.value) || "";
+        const loanTerm = parseFloat(loanTermInput.value) || 0;
+        const interestRate = parseFloat(interestRateInput.value) || 0;
+        const propertyTaxes = parseFloat(propertyTaxesInput.value) || 0;
+        const homeInsurance = parseFloat(homeInsuranceInput.value) || 0;
+        const hoaFees = parseFloat(hoaFeesInput.value) || 0;
+        
+        // Monthly Interest Rate & Total Payments
+        const monthlyRate = interestRate / 100 / 12;
+        const totalPayments = loanTerm * 12;
+        
+        let principalAndInterest = 0;
+        if (monthlyRate === 0) {
+            principalAndInterest = loanAmount / totalPayments;
+        } else {
+            principalAndInterest = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) /
+                (Math.pow(1 + monthlyRate, totalPayments) - 1);
+        }
+        
+        // Display values
+        document.getElementById('principalInterest').textContent = Math.round(principalAndInterest);
+        document.getElementById('homeInsuranceDisplay').textContent = Math.round(homeInsurance / 12);
+        document.getElementById('propertyTaxDisplay').textContent = Math.round(propertyTaxes / 12);
+        document.getElementById('hoaFeesDisplay').textContent = Math.round(hoaFees);
+        
+        // Total Monthly Payment
+        const totalMonthlyPayment = principalAndInterest + propertyTaxes / 12 + homeInsurance / 12 + hoaFees;
+        document.getElementById('monthlyPayment').textContent = totalMonthlyPayment.toFixed(0);
+        
+        // Calculate APR
+        const totalFees = parseFloat(propertyTaxes) + parseFloat(homeInsurance);
+        const apr = calculateAPR(loanAmount, totalFees, loanTerm, interestRate);
+        aprInput.value = apr;
+        
+        // updateDownPayment(true);
+    }
+    
+
+    
 
     // Initialize values when the page loads
     loanTypeSelect.dispatchEvent(new Event('change'));
 }
+loanTypeSelect.addEventListener('change', () => {
+    const isRefinance = loanTypeSelect.value === 'refinance';
+
+    if (isRefinance) {
+        // Show Refinance-related fields
+        refinancePriceWrapper.style.display = 'flex';
+        purchasePriceWrapper.style.display = 'none';
+        downPaymentWrapper.style.display = 'none';  // Hide down payment field in refinance case
+        emdWrapper.style.display = 'none';
+        ltvWrapper.style.display = 'flex';  // Show LTV field
+        emd.value = "0";  // Reset EMD to 0 for refinance
+        ltvInput.disabled = false;  // Enable LTV field for refinance
+    } else {
+        // Show Purchase-related fields
+        refinancePriceWrapper.style.display = 'none';
+        purchasePriceWrapper.style.display = 'flex';
+        downPaymentWrapper.style.display = 'flex';  // Show down payment field in purchase case
+        emdWrapper.style.display = 'flex';
+        ltvWrapper.style.display = 'none';  // Hide LTV field for purchase
+        ltvInput.disabled = true;  // Disable LTV field for purchase
+    }
+    calculateMonthlyPayment(); // Recalculate when loan type changes
+});
+
 
 initCalculator();
 submitPassword.addEventListener('click', () => {
@@ -266,3 +440,27 @@ window.addEventListener('click', (event) => {
         resmodal.style.display = 'none';
     }
 });
+
+//   const ltvInput = document.getElementById('ltv');
+  
+//   ltvInput.addEventListener('input', () => {
+//     let value = parseInt(ltvInput.value, 10);
+//     if (value < 0) {
+//       ltvInput.value = 0;
+//     } else if (value > 99) {
+//       ltvInput.value = 99;
+//     }
+//   });
+// document.querySelector('.limit').addEventListener('input', function () {
+//     if (this.value < 0) this.value = 0;
+//     if (this.value > 99) this.value = 99;
+// });
+
+// document.getElementById("ltv").addEventListener("input", function () {
+//     let value = this.value;
+//     if (value < 0) {
+//         this.value = 0;
+//     } else if (value > 99) {
+//         this.value = 0;
+//     }
+// });

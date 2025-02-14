@@ -9,7 +9,9 @@
     <title>Loan Calculator</title>
     <link rel="stylesheet" href="{{asset('css/styles2.css')}}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+        integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .disabled {
             cursor: not-allowed;
@@ -19,7 +21,8 @@
             background-color: #80808036 !important;
             cursor: not-allowed;
         }
-        .one-table ul li{
+
+        .one-table ul li {
             text-align: left;
         }
     </style>
@@ -52,39 +55,58 @@
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">A. Origination Charges</span>
-                                <span class="item-value">$0.00</span>
+                                <span class="item-value"></span>
                             </div>
                             <ul class="origination-charges-list">
-                                <li style="text-align: left;">Underwritting Fee: <span style="float: right;">$1050.00</span></li>
-                                <li style="text-align: left;">Discount Points: <span style="float: right;">$0.00</span></li>
+                                <li style="text-align: left;">Underwritting Fee: <span
+                                        style="float: right;">$1,050.00</span></li>
+                                <li style="text-align: left;display: none;" class="disLi">Discount Points: <span
+                                        style="float: right;" class="discont_p">$0.00</span></li>
                             </ul>
+                            <div class="cost-item">
+                                <span class="item-label">Total Origination Charges</span>
+                                <span class="item-value total-origination">$0.00</span>
+                            </div>
                         </div>
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">B. Services You Cannot Shop For</span>
-                                <span class="item-value">$ 1579.00</span>
+                                <span class="item-value"></span>
                             </div>
                             <ul class="service-cannot-shop-list">
-                                <li style="text-align: left;">Appraisal Fee: <span style="float: right;">$650.00</span></li>
-                                <li style="text-align: left;">3rd Party Processing Fee: <span style="float: right;">$649.00</span></li>
+                                <li style="text-align: left;">Appraisal Fee: <span style="float: right;">$650.00</span>
+                                </li>
+                                <li style="text-align: left;">3rd Party Processing Fee: <span
+                                        style="float: right;">$649.00</span></li>
                                 <li style="text-align: left;">MERS Fee: <span style="float: right;">$30.00</span></li>
-                                <li style="text-align: left;">Life of Loan Flood Fee: <span style="float: right;">$130.00</span></li>
-                                <li style="text-align: left;">Flood Certification Fee: <span style="float: right;">$35.00</span></li>
-                                <li style="text-align: left;">Credit Report Fee: <span style="float: right;">$85.00</span></li>
+                                <li style="text-align: left;">Life of Loan Flood Fee: <span
+                                        style="float: right;">$130.00</span></li>
+                                <li style="text-align: left;">Flood Certification Fee: <span
+                                        style="float: right;">$35.00</span></li>
+                                <li style="text-align: left;">Credit Report Fee: <span
+                                        style="float: right;">$85.00</span></li>
                             </ul>
+                            <div class="cost-item">
+                                <span class="item-label">Total Services You Cannot Shop For</span>
+                                <span class="item-value">$ 1,579.00</span>
+                            </div>
                         </div>
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">C. Services You Can Shop For</span>
-                                <span class="item-value total-services-shop"></span>
+                                <span class="item-value"></span>
                             </div>
                             <ul class="service-can-shop-list">
                             </ul>
+                            <div class="cost-item">
+                                <span class="item-label">Total Services You Can Shop For</span>
+                                <span class="item-value total-services-shop"></span>
+                            </div>
                         </div>
                         <div class="one-table">
                             <div class="cost-item total-cost">
                                 <span class="item-label">D. TOTAL LOAN COSTS</span>
-                                <span class="item-value total-services-shop"></span>
+                                <span class="item-value total-loan-cost"></span>
                             </div>
                         </div>
                     </div>
@@ -93,14 +115,19 @@
                         <div class="one-table bg-dark-gray" style="">
                             <div class="cost-item">
                                 <span class="item-label">E. Taxes and Other Government Fees</span>
-                                <span class="item-value total-taxes"></span>
+                                <span class="item-value"></span>
                             </div>
                             <ul class="service-list">
-                                <li>Recording Fees and Other Taxes: <span style="float: right;" class="tax"></span></li>
-                                <li>Transfer Taxes: <span style="float: right;" class="recording"></span></li>
+                                <li>Recording Fees and Other Taxes: <span style="float: right;"
+                                        class="recording"></span></li>
+                                <li>Transfer Taxes: <span style="float: right;" class="tax"></span></li>
                             </ul>
+                            <div class="cost-item">
+                                <span class="item-label">Total Taxes and Other Government Fees</span>
+                                <span class="item-value total-taxes"></span>
+                            </div>
                         </div>
-                        <div class="one-table bg-dark-gray" style="background-color: #c99e9e !important; font-size: 11px;">
+                        <!-- <div class="one-table bg-dark-gray" style="background-color: #c99e9e !important; font-size: 11px;">
                             <div class="cost-item">
                                 <span class="item-label">E-1. Recording Fee Break Down</span>
                                 <span class="item-value"></span>
@@ -117,38 +144,67 @@
                             <ul class="service-list tax-breakdown">
 
                             </ul>
-                        </div>
+                        </div> -->
 
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">F. Pre-Paids</span>
-                                <span class="item-value">$0</span>
+                                <span class="item-value"></span>
                             </div>
-                            <ul class="service-list">
-                                <li>Homeowner's Insurance Premium (months): <span style="float: right;">$0.00</span></li>
-                                <li>Mortgage Insurance Premium (months): <span style="float: right;">$0.00</span></li>
-                                <li>Prepaid Interest (per day for days @ ): <span style="float: right;">$0.00</span></li>
-                                <li>Property Taxes (months): <span style="float: right;">$0.00</span></li>
+                            <ul class="service-list prepaid">
+
                             </ul>
+                            <div class="cost-item">
+                                <span class="item-label">Total Pre-Paids</span>
+                                <span class="item-value total-prepaid">$0</span>
+                            </div>
                         </div>
                         <div class="one-table">
                             <div class="cost-item">
                                 <span class="item-label">G. Initial Escrow Payment at Closing </span>
-                                <span class="item-value">$0</span>
+                                <span class="item-value total-escrow">$0</span>
                             </div>
-                            <ul class="service-list">
-                                <li>Homeowner's Insurance per month for mo: <span style="float: right;">$0.00</span></li>
-                                <li>Mortgage Insurance per month for mo.: <span style="float: right;">$0.00</span></li>
-                                <li>Property Taxes per month for mo: <span style="float: right;">$0.00</span></li>
+                            <ul class="service-list escrow">
+
                             </ul>
+                            <div class="cost-item">
+                                <span class="item-label">Total Initial Escrow Payment at Closing </span>
+                                <span class="item-value"></span>
+                            </div>
                         </div>
                         <div class="one-table">
                             <div class="cost-item total-cost">
                                 <span class="item-label">H. Others</span>
-                                <span class="item-value total-others"></span>
+                                <span class="item-value"></span>
                             </div>
                             <ul class="service-list other-fee-list">
                             </ul>
+                            <div class="cost-item total-cost">
+                                <span class="item-label">Total Others</span>
+                                <span class="item-value total-others"></span>
+                            </div>
+                        </div>
+                        <div class="one-table">
+                            <div class="cost-item total-cost">
+                                <span class="item-label">I. Total Estimated Monthly Housing Payment</span>
+                                <span class="item-value"></span>
+                            </div>
+                            <ul class="service-list est-monthly">
+                                <li style="text-align: left;">First Mortgage Payment: <span style="float: right;"
+                                        class="f_mortgage">$0.00</span></li>
+                                <li style="text-align: left;">Hazard Insurance: <span style="float: right;"
+                                        class="monthly_insurance">$0.00</span></li>
+                                <li style="text-align: left;">Property Tax: <span style="float: right;"
+                                        class="monthly_tax">$0.00</span></li>
+                                <li style="text-align: left;">Mortgage Insurance: <span style="float: right;"
+                                        class="monthly_mip">$0.00</span></li>
+                                <li style="text-align: left;">Monthly HOA Fee: <span style="float: right;"
+                                        class="monthly_hoa">$0.00</span></li>
+                            </ul>
+                            <div class="cost-item total-cost">
+                                <span class="item-label">Total Estimated Monthly Housing Payment</span>
+                                <span class="item-value total-est-monthly"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -161,9 +217,21 @@
     <div class="modal1" id="email_modal">
         <div class="modal-content">
             <span class="close" id="close_modal">&times;</span>
-            <h3>Enter email to send pdf</h3>
-            <input type="text" id="send_email" placeholder="Enter email" />
-            <button class="sendEmail">Send PDF</button>
+            <!--<h3>Enter the email Id you want to sent disastemate</h3>-->
+            <input type="text" id="send_email" placeholder="Enter the email Id you want to sent disastemate" />
+            <div class="button-container pdf">
+                <button class="button btn-pdf disabled" disabled>
+                    <span>Download PDF Now</span>
+                    <div class="layer"></div>
+                </button>
+            </div>
+            <!--<button class="sendEmail btn-email">Send Email</button>-->
+            <div class="button-container pdf">
+                <button class="button sendEmail btn-email disabled" disabled>
+                    <span>Send PDF</span>
+                    <div class="layer"></div>
+                </button>
+            </div>
         </div>
     </div>
     <!--<div class="flex_btns">-->
@@ -178,27 +246,29 @@
         <!-- <div class="pdf">
     <button>Download PDF</button>
   </div> -->
-        <div class="button-container pdf">
+        <!-- <div class="button-container pdf">
             <button class="button btn-pdf disabled" disabled>
                 <span>Download PDF</span>
                 <div class="layer"></div>
             </button>
-        </div>
+        </div> -->
         <!-- <div class="email">
 <button id="open_modal">Email</button>
   </div> -->
-        <div class="button-container email">
+        <!-- <div class="button-container email">
             <button id="open_modal" class="button btn-email disabled" disable>
                 <span>Email</span>
                 <div class="layer"></div>
             </button>
-        </div>
+        </div> -->
     </div>
     <!-- Calculator -->
     <div class="container outer">
         <div class="calculator-main">
             <div class="calculator">
-                <h2>Loan Calculator</h2>
+                <!-- <h2 style="text-align:start;color: rgb(12, 57, 200);">Step 1</h2> -->
+                <h3 style="color:white;text-align:center">Loan Calculator - Step 1</h3>
+
 
 
 
@@ -231,7 +301,8 @@
                     <label for="refinancePrice">Estimated Property Value ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="text" class="number-input" id="refinancePrice" value="100000" placeholder="Enter refinance price" />
+                        <input type="text" class="number-input" id="refinancePrice" value="100000"
+                            placeholder="Enter refinance price" />
                     </div>
                 </div>
 
@@ -240,7 +311,8 @@
                     <label for="purchasePrice">Purchase Price ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="text" class="number-input" id="purchasePrice" value="100000" placeholder="Enter purchase price" />
+                        <input type="text" class="number-input" id="purchasePrice" value="100000"
+                            placeholder="Enter purchase price" />
                     </div>
                 </div>
 
@@ -272,7 +344,7 @@
                     <label for="ltv">Loan to Value (LTV)</label>
                     <div class="input-wrapper ">
                         <span>%</span>
-                        <input type="number" id="ltv" class="readonly" />
+                        <input type="number" id="ltv" value="0" />
                     </div>
                 </div>
                 <!-- loan amount -->
@@ -280,7 +352,7 @@
                     <label for="interestRate">Loan Amount ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" class="dis" id="loan_amount" readonly class="readonly" />
+                        <input type="number" id="loan_amount" />
                     </div>
                 </div>
                 <!-- Loan Term and Interest Rate -->
@@ -318,7 +390,8 @@
                     <label for="interestRate">Interest Rate (%)</label>
                     <div class="input-wrapper">
                         <span>%</span>
-                        <input type="number" id="interestRate" value="7.09" placeholder="Enter annual interest rate" value="5" />
+                        <input type="number" id="interestRate" value="7.09" placeholder="Enter annual interest rate"
+                            value="5" />
                     </div>
                 </div>
                 <div class="flex_input">
@@ -341,81 +414,41 @@
                     <label for="propertyTaxes">Annual Property Taxes ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="propertyTaxes" placeholder="Enter annual property taxes" />
+                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="propertyTaxes"
+                            placeholder="Enter annual property taxes" />
                     </div>
                 </div>
                 <div class="flex_input">
                     <label for="homeInsurance">Annual Home Insurance ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="homeInsurance" placeholder="Enter annual home insurance" />
+                        <input type="number" onkeyup="calculateMonthlyPayment1()" value="0" id="homeInsurance"
+                            placeholder="Enter annual home insurance" />
                     </div>
                 </div>
                 <div class="flex_input">
                     <label for="hoaFees">Monthly HOA Fees ($)</label>
                     <div class="input-wrapper">
                         <span>$</span>
-                        <input type="number" id="hoaFees" onkeyup="calculateMonthlyPayment1()" value="0" placeholder="Enter monthly HOA fees" />
+                        <input type="number" id="hoaFees" onkeyup="calculateMonthlyPayment1()" value="0"
+                            placeholder="Enter monthly HOA fees" />
+                    </div>
+                </div>
+                <div class="flex_input">
+                    <label for="seller_assistance">Seller's Assistance($)</label>
+                    <div class="input-wrapper">
+                        <span>$</span>
+                        <input type="number" id="seller_assistance" value="0" placeholder="Enter Seller's Assistance" />
+                    </div>
+                </div>
+                <div class="flex_input">
+                    <label for="discount_points">Discount Points($)</label>
+                    <div class="input-wrapper">
+                        <span>$</span>
+                        <input type="number" id="discount_points" value="0" placeholder="Enter Discount Points" />
                     </div>
                 </div>
 
-
-                <div class="user_form">
-                    <form action="">
-                        <div style="margin: auto;margin-top: 20px;">
-                            <h3>LO Profile</h3>
-                            <div class="flex_input">
-                                <label for="name">Name</label>
-                                <div class="input-wrapper without-tag">
-                                    <input type="text" id="name" placeholder="Name" />
-                                </div>
-                            </div>
-                            <div class="flex_input">
-                                <label for="title">Title</label>
-                                <div class="input-wrapper without-tag">
-                                    <input type="text" id="title" placeholder="Title" />
-                                </div>
-                            </div>
-                            <div class="flex_input">
-                                <label for="phone">Phone Number:</label>
-                                <div class="input-wrapper without-tag">
-                                    <input type="phone" id="phone" placeholder="Enter phone number" />
-                                </div>
-                            </div>
-                            <div class="flex_input">
-                                <label for="email">Email</label>
-                                <div class="input-wrapper without-tag">
-                                    <input type="phone" id="email" placeholder="Enter email" />
-                                </div>
-                            </div>
-                            <div class="flex_input">
-                                <label for="email">License #</label>
-                                <div class="input-wrapper without-tag">
-                                    <input type="phone" id="license_no" placeholder="Enter license number" />
-                                </div>
-                            </div>
-                            <!-- Upload input -->
-                            <div class="flex_input">
-                                <label for="img">Upload <br> Head shots/Interchangeable</label>
-                                <div class="input-wrapper without-tag">
-                                    <input type="file" id="img" />
-                                </div>
-                            </div>
-                            <!--<div class="submit_user">-->
-                            <!--    <button>Submit</button>-->
-                            <!--</div>-->
-                            <div style="text-align: end;">
-                                <div class="button-container">
-                                    <button class="button">
-                                        <span>Submit</span>
-                                        <div class="layer"></div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
             </div>
 
             <div class="calculator-right">
@@ -423,7 +456,9 @@
                     <div class="subjected_info">
                         <!-- Subject Address input -->
                         <div>
+                            <!-- <h2 style="text-align:start;color: rgb(12, 57, 200);">Step 2</h2> -->
                             <h3>Subject Property</h3>
+
                         </div>
                         <div class="right_input_flex" style="width: 100%;">
                             <label for="subject">Subject Address</label>
@@ -435,13 +470,15 @@
                             <div class="right_input_flex">
                                 <label for="city">City</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="city" placeholder="e.g. Hialeah" style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="city" placeholder="e.g. Hialeah"
+                                        style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                             <div class="right_input_flex">
                                 <label for="state">State</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="state" placeholder="e.g. Florida" style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="state" placeholder="e.g. Florida"
+                                        style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                         </div>
@@ -449,23 +486,30 @@
                             <div class="right_input_flex">
                                 <label for="zip">Zip</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="zip" placeholder="e.g. 33015" style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="zip" placeholder="e.g. 33015"
+                                        style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                             <div class="right_input_flex">
                                 <label for="county">County</label>
                                 <div class="right-input">
-                                    <input type="text" class="dis" id="county" placeholder="e.g. Miami-Dade" style=" cursor: not-allowed;" readonly />
+                                    <input type="text" class="dis" id="county" placeholder="e.g. Miami-Dade"
+                                        style=" cursor: not-allowed;" readonly />
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="get_fees">
-                        <button>
-                            <span>Get Fees</span>
-                            <div class="layer"></div>
-                        </button>
+                        <div style="margin-right:20px">
+                            <h3>Step 2</h3>
+                        </div>
+                        <div style="display: flex;align-items: center;">
+                            <button>
+                                <span>Get Fees</span>
+                                <div class="layer"></div>
+                            </button>
+                        </div>
                     </div>
                     <hr style="display:none">
                     <div class="blue-box" style="display:none">
@@ -557,19 +601,106 @@
             </div>
 
         </div>
+        <div class="calculator-main">
+            <div class="calculator">
+                <div class="user_form">
+                    <form action="">
+                        <div style="margin: auto;margin-top: 20px;">
+                            <!-- <h2 style="text-align:start;color: rgb(12, 57, 200);">Step 3</h2> -->
+                            <h3>LO Profile</h3>
+
+                            <div class="flex_input">
+                                <label for="name">Name</label>
+                                <div class="input-wrapper without-tag">
+                                    <input type="text" id="name" placeholder="Name" />
+                                </div>
+                            </div>
+                            <div class="flex_input">
+                                <label for="title">Title</label>
+                                <div class="input-wrapper without-tag">
+                                    <input type="text" id="title" placeholder="Title" />
+                                </div>
+                            </div>
+                            <div class="flex_input">
+                                <label for="phone">Phone Number:</label>
+                                <div class="input-wrapper without-tag">
+                                    <input type="phone" id="phone" placeholder="Enter phone number" />
+                                </div>
+                            </div>
+                            <div class="flex_input">
+                                <label for="email">Email</label>
+                                <div class="input-wrapper without-tag">
+                                    <input type="phone" id="email" placeholder="Enter email" />
+                                </div>
+                            </div>
+                            <div class="flex_input">
+                                <label for="email">License #</label>
+                                <div class="input-wrapper without-tag">
+                                    <input type="phone" id="license_no" placeholder="Enter license number" />
+                                </div>
+                            </div>
+                            <!-- Upload input -->
+                            <div class="flex_input">
+                                <label for="img">Upload <br> Head shots/Interchangeable</label>
+                                <div class="input-wrapper without-tag">
+                                    <input type="file" id="img" />
+                                </div>
+                            </div>
+                            <!--<div class="submit_user">-->
+                            <!--    <button>Submit</button>-->
+                            <!--</div>-->
+                            <div style="text-align: end;">
+                                <div class="button-container">
+                                    <button class="button" onclick="opensendModal()" id="open_modal">
+                                        <span>Final Step</span>
+                                        <div class="layer"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="calculator-right">
+
+            </div>
+
+        </div>
     </div>
     <script>
+        var letSend = false;
         var township = 'All Townships';
         var state_short_name = '';
         var county = '';
         var sendingemail = '';
         var fee_response_json = {};
     </script>
-    <script src="{{asset('js/script2.js')}}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        document.querySelector('.get_fees button').addEventListener('click', function(e) {
+        function opensendModal() {
+            // prevent form submission
+            event.preventDefault();
+            if (letSend) {
+                const modal = document.getElementById('email_modal');
+                modal.style.display = 'flex';
+            } else {
+                toastr.error('Please fill all the fields and generate fee first.', '', {
+                    timeOut: 1000 // Auto-dismiss after 1 second
+                });
+            }
+
+
+        }
+    </script>
+    <script src="{{asset('js/script2.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.querySelector('.get_fees button').addEventListener('click', function (e) {
             // validate first. Following fields are required state, county, and purchase price/Estimated Property Value based on loanType
             if ($('#state').val() == '') {
                 toastr.error('Please select a valid address', '', {
@@ -602,7 +733,8 @@
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     data: formData
                 },
-                success: function(response) {
+                success: function (response) {
+                    letSend = true;
                     document.querySelector('.get_fees button').classList.remove('disabled');
                     document.querySelector('.get_fees button').innerHTML = 'Get Fees';
                     fee_response_json = response;
@@ -618,8 +750,8 @@
                     document.querySelector('.btn-pdf').classList.remove('disabled');
                     document.querySelector('.btn-pdf').removeAttribute('disabled');
                 },
-                error: function(error) {
-
+                error: function (error) {
+                    letSend = false;
                     document.querySelector('.get_fees button').classList.remove('disabled');
                     document.querySelector('.get_fees button').innerHTML = 'Get Fees';
                     console.log(error);
@@ -638,34 +770,126 @@
             resmodal.style.display = 'none';
             var serviceCanShopList = document.querySelector('.service-can-shop-list');
             serviceCanShopList.innerHTML = '';
-            response.data.services_you_can_shop_for.forEach(function(fee) {
+            response.data.services_you_can_shop_for.forEach(function (fee) {
                 var li = document.createElement('li');
-                li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + fee.Amount + '</span>';
+                li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + convertToMoney(fee.Amount) + '</span>';
                 serviceCanShopList.appendChild(li);
             });
 
             var totalServicesShop = document.querySelectorAll('.total-services-shop');
             totalServicesShop.innerHTML = '';
-            totalServicesShop.forEach(function(total) {
-                total.innerHTML = '$' + response.data.total_loan_cost;
+            totalServicesShop.forEach(function (total) {
+                total.innerHTML = '$' + convertToMoney(response.data.total_loan_cost);
+                // the variable total_loan_cost only givesfor services you can shop for dont get confused
             });
+            $total_loan_cost = document.querySelector('.total-loan-cost');
+            $total_loan_cost_value = response.data.total_loan_cost + 1579 + 1050 + parseFloat($('#discount_points').val());
+            $total_loan_cost.innerHTML = '$' + convertToMoney($total_loan_cost_value);
+            // in discont_p show value of input discount_points
+            var discont_p = document.querySelector('.discont_p');
+            discont_p.innerHTML = '';
+            if ($('#discount_points').val() == '' || $('#discount_points').val() == 0 || $('#discount_points').val() == null) {
+                document.querySelector('.disLi').style.display = 'none';
+            } else {
+                document.querySelector('.disLi').style.display = 'block';
+            }
+            discont_p.innerHTML = '$' + convertToMoney($('#discount_points').val());
+            // in total-origination show 1050.00 + discount_points value
+            var totalOrigination = document.querySelectorAll('.total-origination');
+            totalOrigination.innerHTML = '';
+            totalOrigination.forEach(function (total) {
+                total.innerHTML = '$' + convertToMoney((1050 + parseFloat($('#discount_points').val())));
+            });
+            // if there is a Deed Fee in recording_fee then console log it
 
             // taxes_and_other_govt_fees contains two things
             // transfer_tax and recording_fee
             // in class span tax show transfer_tax and recording show recording_fee
             var totalTaxes = document.querySelectorAll('.total-taxes');
             totalTaxes.innerHTML = '';
-            totalTaxes.forEach(function(total) {
-                total.innerHTML = '$' + (response.data.taxes_and_other_govt_fees.transfer_tax + response.data.taxes_and_other_govt_fees.recording_fee);
+            totalTaxes.forEach(function (total) {
+                total.innerHTML = '$' + convertToMoney((response.data.taxes_and_other_govt_fees.transfer_tax + response.data.taxes_and_other_govt_fees.recording_fee));
             });
 
             var tax = document.querySelector('.tax');
             tax.innerHTML = '';
-            tax.innerHTML = '$' + response.data.taxes_and_other_govt_fees.transfer_tax;
+            tax.innerHTML = '$' + convertToMoney(response.data.taxes_and_other_govt_fees.transfer_tax);
 
             var recording = document.querySelector('.recording');
             recording.innerHTML = '';
-            recording.innerHTML = '$' + response.data.taxes_and_other_govt_fees.recording_fee;
+            recording.innerHTML = '$' + convertToMoney(response.data.taxes_and_other_govt_fees.recording_fee);
+            // Table I
+            // total-est-monthly, monthly_mip,monthly_tax, monthly_insurance get these
+
+
+
+            // get these mip, homeInsurance, propertyTaxes
+
+            var homeInsurance = document.querySelector('#homeInsurance');
+            var propertyTaxes = document.querySelector('#propertyTaxes');
+
+            // in prepaid show mip, homeInsurance, propertyTaxes with title on left and values on right side
+            var prepaid = document.querySelector('.prepaid');
+            prepaid.innerHTML = '';
+
+
+            var li = document.createElement('li');
+            li.innerHTML = 'Home Insurance (5 months): <span style="float: right;">$' + convertToMoney(((parseFloat(homeInsurance.value) / 12) * 5).toFixed(2)) + '</span>';
+            prepaid.appendChild(li);
+
+            var li = document.createElement('li');
+            li.innerHTML = 'Property Taxes (5 months): <span style="float: right;">$' + convertToMoney(((parseFloat(propertyTaxes.value) / 12) * 5).toFixed(2)) + '</span>';
+            prepaid.appendChild(li);
+
+
+            // show in total-prepaid the total of mip, homeInsurance, propertyTaxes with formula applied
+            var totalPrepaid = document.querySelectorAll('.total-prepaid');
+            totalPrepaid.innerHTML = '';
+            totalPrepaid.forEach(function (total) {
+                total.innerHTML = '$' + convertToMoney((((parseFloat(homeInsurance.value) / 12) * 5) + ((parseFloat(propertyTaxes.value) / 12) * 5)).toFixed(2));
+            });
+
+
+            // in escrow show mip, homeInsurance, propertyTaxes with title on left and values on right side
+            var escrow = document.querySelector('.escrow');
+            escrow.innerHTML = '';
+
+
+            var li = document.createElement('li');
+            li.innerHTML = 'Home Insurance (2 months): <span style="float: right;">$' + convertToMoney(((parseFloat(homeInsurance.value) / 12) * 2).toFixed(2)) + '</span>';
+            escrow.appendChild(li);
+
+            var li = document.createElement('li');
+            li.innerHTML = 'Property Taxes (2 months): <span style="float: right;">$' + convertToMoney(((parseFloat(propertyTaxes.value) / 12) * 2).toFixed(2)) + '</span>';
+            escrow.appendChild(li);
+
+            // show in total-escrow the total of mip, homeInsurance, propertyTaxes with formula applied
+            var totalEscrow = document.querySelectorAll('.total-escrow');
+            totalEscrow.innerHTML = '';
+            totalEscrow.forEach(function (total) {
+                total.innerHTML = '$' + convertToMoney((((parseFloat(homeInsurance.value) / 12) * 2) + ((parseFloat(propertyTaxes.value) / 12) * 2)).toFixed(2));
+            });
+            // Table I
+            var mip = document.querySelector('#mip');
+            var monthly_mip = document.querySelector('.monthly_mip');
+            monthly_mip.innerHTML = '$' + convertToMoney((parseFloat(mip.value) || 0).toFixed(2));
+            var hoa = document.querySelector('#hoaFees');
+            var monthly_hoa = document.querySelector('.monthly_hoa');
+            monthly_hoa.innerHTML = '$' + convertToMoney((parseFloat(hoa.value) || 0).toFixed(2));
+            var monthly_tax = document.querySelector('.monthly_tax');
+            monthly_tax.innerHTML = '';
+            monthly_tax.innerHTML = '$' + convertToMoney((parseFloat(propertyTaxes.value) / 12).toFixed(2));
+            var monthly_insurance = document.querySelector('.monthly_insurance');
+            monthly_insurance.innerHTML = '';
+            monthly_insurance.innerHTML = '$' + convertToMoney((parseFloat(homeInsurance.value) / 12).toFixed(2));
+            var f_mortgage = document.querySelector('.f_mortgage');
+            f_mortgage.innerHTML = '';
+            f_mortgage.innerHTML = '$' + convertToMoney(calFirstMortgage());
+            var totalEstMonthly = document.querySelectorAll('.total-est-monthly');
+            totalEstMonthly.innerHTML = '';
+            totalEstMonthly.forEach(function (total) {
+                total.innerHTML = '$' + convertToMoney((parseFloat(mip.value) + parseFloat(hoa.value) + (parseFloat(homeInsurance.value) / 12) + (parseFloat(propertyTaxes.value) / 12) + calFirstMortgage()).toFixed(2));
+            });
 
 
             // in response other_fees contains other fee items
@@ -674,37 +898,37 @@
             otherFeeList.innerHTML = '';
             for (var key in response.data.other_fees) {
                 var li = document.createElement('li');
-                li.innerHTML = key + ': <span style="float: right;">$' + response.data.other_fees[key] + '</span>';
+                li.innerHTML = key + ': <span style="float: right;">$' + convertToMoney(response.data.other_fees[key]) + '</span>';
                 otherFeeList.appendChild(li);
             }
 
             var totalOthers = document.querySelectorAll('.total-others');
             totalOthers.innerHTML = '';
-            totalOthers.forEach(function(total) {
+            totalOthers.forEach(function (total) {
                 var totalAmount = 0;
                 for (var key in response.data.other_fees) {
                     totalAmount += response.data.other_fees[key];
                 }
-                total.innerHTML = '$' + totalAmount;
+                total.innerHTML = '$' + convertToMoney(totalAmount);
             });
 
             // show transfer_fee_breakdown as li(s) in tax-breakdown
-            var taxBreakdown = document.querySelector('.tax-breakdown');
-            taxBreakdown.innerHTML = '';
-            response.data.transfer_fee_breakdown.forEach(function(fee) {
-                var li = document.createElement('li');
-                li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + fee.Amount + '</span>';
-                taxBreakdown.appendChild(li);
-            });
+            // var taxBreakdown = document.querySelector('.tax-breakdown');
+            // taxBreakdown.innerHTML = '';
+            // response.data.transfer_fee_breakdown.forEach(function(fee) {
+            //     var li = document.createElement('li');
+            //     li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + fee.Amount + '</span>';
+            //     taxBreakdown.appendChild(li);
+            // });
 
-            // show recording_fee_breakdown as li(s) in recording-breakdown
-            var recordingBreakdown = document.querySelector('.recording-breakdown');
-            recordingBreakdown.innerHTML = '';
-            response.data.recording_fee_breakdown.forEach(function(fee) {
-                var li = document.createElement('li');
-                li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + fee.Amount + '</span>';
-                recordingBreakdown.appendChild(li);
-            });
+            // // show recording_fee_breakdown as li(s) in recording-breakdown
+            // var recordingBreakdown = document.querySelector('.recording-breakdown');
+            // recordingBreakdown.innerHTML = '';
+            // response.data.recording_fee_breakdown.forEach(function(fee) {
+            //     var li = document.createElement('li');
+            //     li.innerHTML = fee.FeeName + ': <span style="float: right;">$' + fee.Amount + '</span>';
+            //     recordingBreakdown.appendChild(li);
+            // });
             resmodal.style.display = 'flex';
         }
 
@@ -735,7 +959,7 @@
 
             return formData;
         }
-        $('.btn-pdf').click(function() {
+        $('.btn-pdf').click(function () {
             console.log("PDF clicked");
             var formdata = buildRequest();
             if (!formdata) {
@@ -753,7 +977,7 @@
                 data: formdata,
                 contentType: false,
                 processData: false,
-                success: function(response) {
+                success: function (response) {
                     // Create a download link
                     var link = document.createElement('a');
                     link.href = response.pdf_url; // URL of the generated PDF
@@ -761,17 +985,17 @@
                     link.click();
 
                     // Wait 5 seconds to ensure download before deletion
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $.ajax({
                             url: response.delete_url, // Delete URL provided by the backend
                             type: 'POST',
                             data: {
                                 _token: $('meta[name="csrf-token"]').attr('content'),
                             },
-                            success: function() {
+                            success: function () {
                                 console.log('Temporary PDF file deleted successfully');
                             },
-                            error: function() {
+                            error: function () {
                                 console.log('Failed to delete temporary PDF file');
                             },
                         });
@@ -785,7 +1009,7 @@
                         timeOut: 1000, // Auto-dismiss after 1 second
                     });
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
 
                     // Reset button state
@@ -798,7 +1022,7 @@
                 },
             });
         });
-        $('.btn-email').click(function() {
+        $('.btn-email').click(function () {
             modal.style.display = 'flex';
         });
 
@@ -830,6 +1054,8 @@
             var apr = $('#apr').val();
             var mip = $('#mip').val();
             var hoaFees = $('#hoaFees').val();
+            var propertyTaxes = $('#propertyTaxes').val();
+            var homeinsurance = $('#homeInsurance').val();
             var name = $('#name').val();
             var title = $('#title').val();
             var phone = $('#phone').val();
@@ -841,6 +1067,8 @@
             var state = $('#state').val();
             var zip = $('#zip').val();
             var county = $('#county').val();
+            var discount_points = $('#discount_points').val();
+            var seller_assistance = $('#seller_assistance').val();
 
             // if(purchasePrice and refinancePrice is empty) then show error
             if (purchasePrice == '' && refinancePrice == '') {
@@ -917,6 +1145,10 @@
             formData.append('apr', apr);
             formData.append('mip', mip);
             formData.append('hoaFees', hoaFees);
+            formData.append('propertyTaxes', propertyTaxes);
+            formData.append('homeinsurance', homeinsurance);
+            formData.append('seller_assistance', seller_assistance);
+            formData.append('principalAndInterest', calFirstMortgage());
             formData.append('name', name);
             formData.append('title', title);
             formData.append('phone', phone);
@@ -928,6 +1160,7 @@
             formData.append('state', state);
             formData.append('zip', zip);
             formData.append('county', county);
+            formData.append('discount_points', discount_points);
             formData.append('sendingemail', sendingemail);
             formData.append('fee_response_json', JSON.stringify(fee_response_json));
 
@@ -935,11 +1168,32 @@
 
         }
 
+
+        function calFirstMortgage() {
+            const loanAmount = parseFloat(document.getElementById('loan_amount').value) || "";
+            const loanTerm = parseFloat(document.getElementById('loanTerm').value) || 0;
+            const interestRate = parseFloat(document.getElementById('interestRate').value) || 0;
+
+            // Monthly Interest Rate & Total Payments
+            const monthlyRate = interestRate / 100 / 12;
+            const totalPayments = loanTerm * 12;
+
+            let principalAndInterest = 0;
+            if (monthlyRate === 0) {
+                principalAndInterest = loanAmount / totalPayments;
+            } else {
+                principalAndInterest = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) /
+                    (Math.pow(1 + monthlyRate, totalPayments) - 1);
+            }
+
+            return principalAndInterest;
+        }
+
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
             return re.test(email);
         }
-        $('.sendEmail').click(function() {
+        $('.sendEmail').click(function () {
             var button = $(this);
             button.html('Sending...');
             button.prop('disabled', true);
@@ -962,12 +1216,15 @@
                 // return;
             }
             var formData2 = buildRequest();
-            formData2.append('_token', $('meta[name="csrf-token"]').attr('content'));
-            console.log(formData2);
             if (!formData2) {
                 console.log('Invalid form data');
+                button.html('Send PDF');
+                button.prop('disabled', false);
                 return;
             }
+            formData2.append('_token', $('meta[name="csrf-token"]').attr('content'));
+            console.log(formData2);
+
 
             $.ajax({
                 url: 'sendpdf',
@@ -975,7 +1232,7 @@
                 data: formData2,
                 contentType: false,
                 processData: false,
-                success: function(response) {
+                success: function (response) {
                     if (response.status == 'success') {
                         button.html('Send PDF');
                         button.prop('disabled', false);
@@ -991,7 +1248,7 @@
                     }
 
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                     button.html('Send PDF');
                     button.prop('disabled', false);
@@ -1060,8 +1317,28 @@
             return '';
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap" async defer></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap"
+        async defer></script>
+    <script>
+        function convertToMoney(val) {
+            // console.log("before" + val);
 
+            let num = parseFloat(val);
+
+            // Check if the conversion is valid
+            if (isNaN(num)) return 0;
+            // console.log("after" + num.toLocaleString("en-US", {
+            //     minimumFractionDigits: 2,
+            //     maximumFractionDigits: 2
+            // }));
+            // Format the number with commas and two decimal places
+            return num.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+    </script>
 </body>
 
 </html>

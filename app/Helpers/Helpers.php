@@ -217,3 +217,18 @@ if (!function_exists('count_records')) {
 		return $query->count();
 	}
 }
+
+if (!function_exists('convertToMoney')) {
+	function convertToMoney($val) {
+		// Convert the input to a float
+		$num = floatval($val);
+	
+		// Check if the conversion is valid
+		if (!is_numeric($val)) {
+			return 0;
+		}
+	
+		// Format the number with commas and two decimal places
+		return number_format($num, 2, '.', ',');
+	}
+}
